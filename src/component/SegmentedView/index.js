@@ -115,6 +115,10 @@ class CusSegmentedView extends PureComponent {
         const { activeIndex } = this.state
         const width = e.nativeEvent.layout.width
         const height = e.nativeEvent.layout.height
+        console.log('activeIndex', activeIndex)
+        // setTimeout(() => {
+        //     console.log('activeIndex', activeIndex)
+        // }, 1000);
         this.setState({ width, height }, () => {
             this.changeScrollPage(activeIndex, false)
         })

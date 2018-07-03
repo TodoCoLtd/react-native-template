@@ -38,7 +38,7 @@ class Content extends React.PureComponent {
 
                     </View>
                 </SegmentedView>
-                <GiftSE />
+                {/* <GiftSE /> */}
             </View>
         );
     }
