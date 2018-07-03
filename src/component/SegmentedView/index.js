@@ -112,9 +112,12 @@ class CusSegmentedView extends PureComponent {
     }
 
     _onLayout = (e) => {
+        const { activeIndex } = this.state
         const width = e.nativeEvent.layout.width
         const height = e.nativeEvent.layout.height
-        this.setState({ width, height })
+        this.setState({ width, height }, () => {
+            this.changeScrollPage(activeIndex, false)
+        })
     }
 
     _captureRef = (v) => {
@@ -323,7 +326,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     barStyle: {
-        height: 30,
+        height: ScaleSize(65),
         backgroundColor: '#fff',
         // backgroundColor: 'red',
     },

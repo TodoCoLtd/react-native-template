@@ -113,7 +113,6 @@ class Index extends React.PureComponent {
 
 const styles = StyleSheet.create({
     playerTools: {
-        // backgroundColor: 'red',
         position: 'absolute',
         top: 0,
         bottom: 0,
@@ -125,8 +124,7 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         left: 0,
-        right: 0
-        // backgroundColor: 'red',
+        right: 0,
     }
 });
 

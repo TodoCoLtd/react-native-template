@@ -25,6 +25,7 @@ class PlayerTools extends React.PureComponent {
     };
 
     _onPressPlay = () => {
+        alert('zz')
         const { onPressPlay } = this.props
         onPressPlay && onPressPlay()
     }
@@ -125,14 +126,15 @@ const styles = StyleSheet.create({
     },
     navContainer: {
         height: Theme.statusBarHeight + Theme.themes.default.navBarContentHeight,
-        // backgroundColor: 'blue',
+        backgroundColor: 'blue',
     },
     statusBar: {
-        height: Theme.statusBarHeight,
+        height: Theme.statusBarHeight - 15,
         // backgroundColor: 'green',
     },
     navContent: {
         flex: 1,
+        backgroundColor: 'red',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
