@@ -1,4 +1,4 @@
-package com.template;
+package com.todo.template;
 
 import android.app.Application;
 import android.content.Context;

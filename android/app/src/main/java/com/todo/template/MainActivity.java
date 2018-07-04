@@ -1,4 +1,4 @@
-package com.template;
+package com.todo.template;
 
 import android.os.Bundle; // here
 // react-native-splash-screen >= 0.3.1

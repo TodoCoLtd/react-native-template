@@ -146,7 +146,8 @@ class CusSegmentedView extends PureComponent {
             >
                 {children.map((item, index) => {
                     return (
-                        <SceneView key={`todo_page${index}`}
+                        <SceneView
+                            key={`todo_page${index}`}
                             lazy={lazy}
                             width={width}
                             item={item}
@@ -218,9 +219,7 @@ class CusSegmentedView extends PureComponent {
             // onLayout={(e) => onLayout && onLayout(e)}
             >
                 {showSegmentedBar ? this._renderSegmentedBar() : null}
-                {
-                    __IOS__ ? this._renderScrollView() : this._renderViewPagerAndroid()
-                }
+                {__IOS__ ? this._renderScrollView() : this._renderViewPagerAndroid()}
             </View>
         );
     }
@@ -259,7 +258,6 @@ class CusSegmentedBar extends PureComponent {
         } else if (typeof renderCustomBar == 'function') {
             customBar = <this.props.renderCustomBar />
         }
-
         return (
             <View style={styles.barStyleContainer} >
                 <ImageBackground style={styles.segmentedBarImage} source={backgroundImage} />
@@ -275,8 +273,7 @@ class CusSegmentedBar extends PureComponent {
                             {...itemOthers}
                             key={`todo_bar${index}`}
                         />
-                    }
-                    )}
+                    })}
                 </SegmentedBar>
             </View >
         );
@@ -313,7 +310,7 @@ class SceneView extends React.PureComponent {
         const { isFocused } = this.state
         console.log('isFocused', isFocused)
         return (
-            isFocused ? React.cloneElement(item, {
+            isFocused && width != 0 ? React.cloneElement(item, {
                 style: [item.props.style, { width }],
             }) : <View style={{ width }} />
         );

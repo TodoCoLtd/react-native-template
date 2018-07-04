@@ -1,4 +1,4 @@
-package com.template.wxapi;
+package com.todo.template.wxapi;
 
 import cn.jiguang.share.wechat.WeChatHandleActivity;
 

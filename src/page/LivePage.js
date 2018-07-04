@@ -50,14 +50,14 @@ class LivePage extends React.PureComponent {
         const { messages } = this.state
         return (
             <Container>
-                <LivePlayer
+                {/* <LivePlayer
                     style={{ flex: 1 }}
                     playerStyle={{ width: 375, height: 220 }}
                     source={{ uri: 'rtmp://live.hkstv.hk.lxdns.com/live/hks' }}
                     messages={messages}
                     onPressRecharge={this._onPressRecharge}
                     onPressGift={this._onPressGift}
-                />
+                /> */}
             </Container>
         );
     }

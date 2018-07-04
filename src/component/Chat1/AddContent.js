@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     container: {
         borderTopWidth: StyleSheet.hairlineWidth,
         borderColor: '#ebeced',
-        backgroundColor: '#ffff',
+        backgroundColor: '#fff',
         justifyContent: 'space-around',
         flexDirection: 'row',
         // flexWrap: 'wrap',

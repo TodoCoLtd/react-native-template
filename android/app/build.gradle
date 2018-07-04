@@ -101,7 +101,7 @@ android {
         javaMaxHeapSize "4g"
     }
     defaultConfig {
-        applicationId "com.template"
+        applicationId "com.todo.template"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
