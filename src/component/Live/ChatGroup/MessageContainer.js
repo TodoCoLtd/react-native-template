@@ -1,9 +1,11 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import FlatListView from '../FlatListView';
+import FlatListView from '../../FlatListView';
+import Message from './Message';
+import GiftMessage from './GiftMessage'
 
-class ChatGroup extends React.PureComponent {
+class MessageContainer extends React.PureComponent {
 
     static propTypes = {
 
@@ -33,18 +35,14 @@ class ChatGroup extends React.PureComponent {
     };
 
     _renderItem = (info) => {
-        const { user } = this.props
-        const { create_at } = info.item
+        const { item, index } = info
         return (
-            <Message
-                info={info}
-                user={user}
-            />
+            item.type === 1 ? <Message {...item} /> : <GiftMessage {...item} />
         )
     };
 
     _keyExtractor = (item, index) => {
-        return `chat_${index}`
+        return `live_chat_${item.message_id}`
     };
 
     _captureRef = (v) => {
@@ -73,58 +71,15 @@ class ChatGroup extends React.PureComponent {
     }
 }
 
-class Message extends React.Component {
-
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     const info = nextProps.info
-    //     const preInfo = this.props.info
-    //     if (info.item.message_id != preInfo.item.message_id) {
-    //         console.log('shouldComponentUpdate')
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // }
-
-    render() {
-        return (
-            <View style={styles.messageContainer}>
-                <Image style={styles.messageImage1} />
-                <Image style={styles.messageImage2} />
-                <Text style={styles.messageName}>路人甲：</Text>
-                <Text style={styles.messageContent}>主播有点皮了</Text>
-            </View>
-        );
-    }
-}
-
-
 const styles = StyleSheet.create({
     flatListView: {
-        // flex: 1,
-    },
-    messageContainer: {
-        flexDirection: 'row',
-        padding: 5,
+        flex: 1,
     },
     contentContainerStyle: {
         flexGrow: 1,
         justifyContent: 'flex-end',
     },
-    messageName: {
-        color: '#2E77E5',
-        fontSize: FontSize(14),
-    },
-    messageImage1: {
 
-    },
-    messageImage2: {
-
-    },
-    messageContent: {
-        color: '#151515',
-        fontSize: FontSize(14),
-    }
 });
 
-export default ChatGroup
+export default MessageContainer

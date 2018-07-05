@@ -26,34 +26,11 @@ Theme.set({
     toastFontSize: fontSize(16),
 })
 
-// 通过系统API获得屏幕宽高
-const { height, width } = Dimensions.get('window');
-
-// 全局样式
-const globalStyles = StyleSheet.create({
-    centerStyle: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    bgTransparentStyle: {
-        backgroundColor: 'transparent',
-    }
-})
-
-const CusTheme = {
+const DefaultTheme = {
     isIPhoneX: Theme.isIPhoneX,
     fitIPhoneXTop: 44,
     fitIPhoneXBottom: 34,
-
-
-    screen_width: width,
-    screen_height: height,
     pageBackgroundColor: '#e7e7ef',
-    // 全局公用样式表 ,感觉不是很合理
-    // 居中样式
-    centerStyle: globalStyles.centerStyle,
-    // 背景透明样式
-    bgTransparentStyle: globalStyles.bgTransparentStyle,
 
     // 弹窗提示组件的样式
     alertWidth: 260,
@@ -90,6 +67,39 @@ const CusTheme = {
     toastOptions: {
         position: 'center',
     }
+}
+
+const CusTheme = {
+
+    get statusBarHeight() {
+        if (Platform.OS === 'ios') {
+            if (DefaultTheme.isIPhoneX) {
+                return DefaultTheme.fitIPhoneXTop
+            } else {
+                return 20
+            }
+        } else if (Platform.OS === 'android') {
+            if (Platform.Version > 20) {
+                return StatusBar.currentHeight
+            }
+            return 0;
+        }
+        return Theme.statusBarHeight
+    },
+    get screenWidth() {
+        return Dimensions.get('screen').width
+    },
+    get screenHeight() {
+        return Dimensions.get('screen').height
+    },
+    get screenInset() {
+        return Theme.screenInset
+    },
+    get isLandscape() {
+        return Dimensions.get('screen').width > Dimensions.get('screen').height
+    },
+    ...DefaultTheme,
+
 }
 
 export default CusTheme

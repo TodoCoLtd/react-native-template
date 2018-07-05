@@ -1,3 +1,5 @@
+// 移除
+
 'use strict'
 import React, { PureComponent } from 'react'
 import RouteHelper from './RouteHelper'
@@ -6,7 +8,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 export const addToRouteStack = (OldComponent) => {
 
     class NewComponent extends PureComponent {
-        
+
         static displayName = `addToRouteStack(${OldComponent.displayName ||
             OldComponent.name})`;
 

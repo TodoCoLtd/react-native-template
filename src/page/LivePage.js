@@ -10,19 +10,41 @@ import NavigationBar from '../component/NavigationBar';
 import Container from '../component/Container';
 import SpinnerLoading from '../component/SpinnerLoading';
 import LivePlayer from '../component/Live/index';
+import ChatManager from '../component/Live/ChatGroup/ChatManager'
+import ChatConstants from '../component/Live/ChatGroup/Constants';
 
 class LivePage extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = { messages: [1, 1, 1, 1, 1, 1, 1] }
+        this.state = { messages: [], giftsData: [] }
+        this.room_id = '2'
+        this.user = {
+            id: '1'
+        }
+        const url = 'ws://wmbchat.nididake.com:9501'
+        const params = {
+            webSocketUrl: url,
+            user: {
+                id: '1'
+            },
+            onChatMessage: this._onChatMessage,
+        }
+        this._chatManager = new ChatManager(params)
     }
 
     componentDidMount() {
         setTimeout(() => {
-            this.setState({ messages: [] })
-        }, 5000);
+            // 进入房间
+            this.enterRoom(true)
+        }, 1000);
     }
+
+    componentWillUnmount() {
+        // 退出房间
+        this.enterRoom(false)
+    }
+
 
     _onPressRecharge = () => {
         const params = {
@@ -35,29 +57,78 @@ class LivePage extends React.PureComponent {
         AlertManager.show(params)
     }
 
-    _onPressGift = () => {
+    _onPressGift = async () => {
+        // const params = {
+        //     title: '温馨提示',
+        //     detail: '弹出礼物界面',
+        //     actions: [
+        //         { title: '确定', onPress: () => { } }
+        //     ]
+        // }
+        // AlertManager.show(params)
+        let url = 'http://liangcai.3todo.com/api/live/buy_gift'
+        let result = await Services.post(url, { gift_code: 'gift_code_1', stream_id: 1, member_id: 1 })
+        console.log(result)
+
+    }
+
+    _onPressSend = (text) => {
         const params = {
-            title: '温馨提示',
-            detail: '弹出礼物界面',
-            actions: [
-                { title: '确定', onPress: () => { } }
-            ]
+            eventName: ChatConstants.send_barrage,
+            data: {
+                message: text,
+                send_uid: 1,
+                room_id: "1"
+            }
         }
-        AlertManager.show(params)
+        this._chatManager.sendMessage(params)
+    }
+
+    enterRoom = (enter) => {
+        const params = {
+            eventName: enter ? ChatConstants.enter_room : ChatConstants.quit_room, //退出:_quit_room
+            data: {
+                send_uid: this.user.id,
+                room_id: this.room_id
+            }
+        }
+        this._chatManager.sendMessage(params)
+    }
+
+    _onChatMessage = (event) => {
+        const { data, eventName } = event
+        const oldMessages = this.state.messages
+        if (eventName === ChatConstants.send_barrage) {
+            const newMessages = [{ ...data, type: 1 }] // 类型：消息
+            this.setState({ messages: newMessages.concat(oldMessages) })
+        } else if (eventName === ChatConstants.send_gift) {
+            const oldGiftsData = this.state.messages
+            const newMessages = [{ ...data, type: 2 }] // 类型：礼物
+            this.setState({
+                messages: newMessages.concat(oldMessages),
+                giftsData: newMessages.concat(oldGiftsData),
+                giftData: { ...data, type: 2 }
+            })
+        } else {
+            console.log('其他种类的消息')
+        }
     }
 
     render() {
-        const { messages } = this.state
+        const { messages, giftsData, giftData } = this.state
         return (
             <Container>
-                {/* <LivePlayer
+                <LivePlayer
                     style={{ flex: 1 }}
                     playerStyle={{ width: 375, height: 220 }}
                     source={{ uri: 'rtmp://live.hkstv.hk.lxdns.com/live/hks' }}
                     messages={messages}
+                    giftsData={giftsData}
+                    giftData={giftData}
                     onPressRecharge={this._onPressRecharge}
                     onPressGift={this._onPressGift}
-                /> */}
+                    onPressSend={this._onPressSend}
+                />
             </Container>
         );
     }

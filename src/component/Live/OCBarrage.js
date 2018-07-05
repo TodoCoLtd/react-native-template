@@ -11,14 +11,15 @@ class OCBarrage extends React.PureComponent {
     componentDidMount() {
         setTimeout(() => {
             OCBarrageViewManager.start()
-            setInterval(() => {
-                this.senderOCBarrage('我是弹幕~')
-            }, 1000)
         }, 500);
     }
 
     senderOCBarrage = (text) => {
-        OCBarrageViewManager.addNormalBarrage(text, { textColor: '#52b6a1', fontSize: FontSize(15), })
+        if (text && text != '') {
+            OCBarrageViewManager.addNormalBarrage(text, { textColor: 'red', fontSize: FontSize(15), })
+        } else {
+            console.warn('弹幕不能为空或者空字符串')
+        }
     }
 
     render() {

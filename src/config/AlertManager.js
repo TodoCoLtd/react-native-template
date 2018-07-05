@@ -30,7 +30,7 @@ class AlertManager {
             Overlay.show(
                 <Overlay.PopView
                     ref={v => this.popViewRefs.push(v)}
-                    style={Theme.centerStyle}
+                    style={{ justifyContent: 'center', alignItems: 'center', }}
                     type={'zoomOut'}
                     modal={false}
                     onCloseRequest={() => this.hide()}

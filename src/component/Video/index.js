@@ -93,10 +93,16 @@ class index extends React.PureComponent {
     }
 
     changeLandscapeVideoStyle = (isLand = false) => {
+        const { videoStyle } = this.props
         setTimeout(() => {
             const { width, height } = Dimensions.get('window');
             // 安卓减去状态栏的高度
-            this.setState({ videoStyle: { width: width, height: __IOS__ ? height + 20 : height - Theme.statusBarHeight } })
+            this.setState({
+                videoStyle: [
+                    videoStyle,
+                    { width: width, height: __IOS__ ? height + 20 : height - Theme.statusBarHeight }
+                ]
+            })
             console.log(width, height)
         }, 200);
     }

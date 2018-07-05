@@ -1,6 +1,6 @@
 'use strict';
-
-const WebSocketUrl = 'ws://wmbchat.nididake.com:9502'
+import Constants from './Constants';
+const WebSocketUrl = 'ws://wmbchat.nididake.com:9501'
 
 class ChatManager {
 
@@ -20,6 +20,7 @@ class ChatManager {
             this.wsInstance = null
         }
         const webSocketUrl = params.webSocketUrl
+        console.log(this.chatParams)
         this.wsInstance = new WebSocket(webSocketUrl);
         this.wsInstance.onopen = this.onOpen
         this.wsInstance.onmessage = this.onMessage
@@ -34,9 +35,15 @@ class ChatManager {
 
 
     registerInfo = (params) => {
-        const data = { ...params, type: 7, } // 注册的消息类型是7
-        console.log('register', data)
-        this.wsInstance.send(JSON.stringify(data))
+        const { user } = this.chatParams
+        const info = {
+            eventName: Constants.register,
+            data: {
+                send_uid: user.id
+            }
+        }
+        console.log('register', info)
+        this.wsInstance.send(JSON.stringify(info))
     }
 
     sendMessage = (params) => {
@@ -46,17 +53,15 @@ class ChatManager {
 
     onOpen = (event) => {
         console.log('onOpen', event)
-        const { token } = this.chatParams
         // 打开后先发送注册的消息
-        const register = { token }
+        const register = { token: this.chatParams.token }
         this.registerInfo(register)
     }
 
     onMessage = (event) => {
-        console.log('onMessage', event)
-        const { onChatMessage } = this.chatParams
         const jsonData = JSON.parse(event.data)
-        onChatMessage && onChatMessage(jsonData)
+        console.log('onMessage', jsonData)
+        this.chatParams.onChatMessage && this.chatParams.onChatMessage(jsonData)
     }
 
     onError = (event) => {

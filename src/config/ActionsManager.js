@@ -48,7 +48,7 @@ class ActionsManager {
                     side={'bottom'}
                     modal={false}
                     rootTransform={'none'}
-                    containerStyle={Theme.bgTransparentStyle}
+                    containerStyle={{ backgroundColor: 'transparent', }}
                     onCloseRequest={() => this.hide()}
                     {...option}
                 >

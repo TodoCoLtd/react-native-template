@@ -41,7 +41,9 @@ class Home extends Component {
             this.setState({ data: dataSource.data });
             // this.flatList.stopRefresh()
         })
-
+        setTimeout(() => {
+            ToastManager.show('asdsadasd')
+        }, 5000);
 
 
     }

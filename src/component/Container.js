@@ -44,7 +44,7 @@ class Container extends React.PureComponent {
                 paddingBottom: Theme.isIPhoneX ? Theme.fitIPhoneXBottom : 0
             } : { marginBottom: Theme.isIPhoneX ? Theme.fitIPhoneXBottom : 0 }
         } else {
-            iphoneXStyle = {}
+            iphoneXStyle = null
         }
         return { iphoneXStyle }
     };

@@ -31,6 +31,8 @@ XPay.setWxId(Constants.WEI_XIN_APPID)
 //设置支付宝URL Schemes
 XPay.setAlipayScheme(Constants.ALIPAY_SCHME)
 
+// 屏蔽调试警告
+console.ignoredYellowBox = ['Remote debugger is in', 'Warning: isMounted(...)'];
 
 if (!__DEV__) {
     global.console = {
@@ -42,8 +44,7 @@ if (!__DEV__) {
     };
 }
 
-// 屏蔽调试警告
-console.ignoredYellowBox = ['Remote debugger is in', 'Warning: isMounted(...)'];
+
 // 系统是iOS
 global.__IOS__ = (Platform.OS === 'ios');
 
@@ -51,10 +52,10 @@ global.__IOS__ = (Platform.OS === 'ios');
 global.__ANDROID__ = (Platform.OS === 'android');
 
 // 获取屏幕宽度
-global.SCREEN_WIDTH = Theme.screen_width;
+global.SCREEN_WIDTH = Theme.screenWidth;
 
 // 获取屏幕高度
-global.SCREEN_HEIGHT = Theme.screen_height;
+global.SCREEN_HEIGHT = Theme.screenHeight;
 
 // 适配字体
 global.FontSize = fontSize;

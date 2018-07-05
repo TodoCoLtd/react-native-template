@@ -161,7 +161,6 @@ export default {
             let status = res.status;
             if (res.ok && status >= 200 && status < 300 || status === 304) {
                 let dataType = s.dataType || res.headers.get('Content-Type');
-
                 if (dataType.match(/json/)) {
                     return Promise.all([res.json(), res]);
                 } else {

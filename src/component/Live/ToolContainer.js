@@ -4,7 +4,25 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, KeyboardAvo
 
 class ToolContainer extends React.PureComponent {
 
+    constructor(props) {
+        super(props)
+        this.inputText = ''
+    }
 
+    _onChangeText = (text) => {
+        this.inputText = text
+    }
+
+    _onSubmitEditing = () => {
+        const { onPressSend } = this.props
+        onPressSend && onPressSend(this.inputText)
+        this.inputRef.clear()
+        this.inputText = ''
+    }
+
+    _captureRef = (v) => {
+        this.inputRef = v
+    }
 
     render() {
         const { onPressRecharge, onPressGift } = this.props
@@ -14,8 +32,12 @@ class ToolContainer extends React.PureComponent {
                     <View style={styles.inputContainer}>
                         <Image style={styles.textInputImage} />
                         <TextInput
+                            ref={this._captureRef}
                             style={styles.textInput}
                             placeholder={'说点什么呗~'}
+                            blurOnSubmit={false}
+                            onSubmitEditing={this._onSubmitEditing}
+                            onChangeText={this._onChangeText}
                             underlineColorAndroid={'transparent'}
                         />
                     </View>

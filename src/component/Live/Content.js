@@ -1,15 +1,17 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import PropTypes from 'prop-types'
 import SegmentedView from '../SegmentedView/index'
 import SegmentedControlTab from '../SegmentedControlTab';
-import ChatGroup from './ChatGroup';
+import ChatGroupPage from './ChatGroup/index';
 import GiftSE from './GiftSE';
 
 class Content extends React.PureComponent {
 
     static propTypes = {
-
+        messages: PropTypes.array,
+        giftsData: PropTypes.array,
     }
 
     static defaultProps = {
@@ -17,12 +19,12 @@ class Content extends React.PureComponent {
     }
 
     render() {
-        const { messages } = this.props
+        const { messages, giftsData, giftData } = this.props
         return (
             <View style={styles.container}>
                 <SegmentedView indicatorLineColor="#01B9A0">
                     <View title={'群英会'} style={styles.container} activeTitleStyle={styles.activeTitleStyle} titleStyle={styles.titleStyle} >
-                        <ChatGroup messages={messages} />
+                        <ChatGroupPage messages={messages} />
                     </View>
                     <View title={'英雄榜'} style={styles.container} activeTitleStyle={styles.activeTitleStyle} titleStyle={styles.titleStyle}>
                         <SegmentedControlTab
@@ -38,7 +40,7 @@ class Content extends React.PureComponent {
 
                     </View>
                 </SegmentedView>
-                {/* <GiftSE /> */}
+                <GiftSE giftsData={giftsData} giftData={giftData} />
             </View>
         );
     }

@@ -78,7 +78,7 @@ class NavTools extends React.PureComponent {
     render() {
         return (
             <View style={styles.navContainer}>
-                <View style={styles.statusBar} />
+                {/* <View style={styles.statusBar} /> */}
                 <View style={styles.navContent}>
                     <TouchableOpacity style={styles.backTouch}>
                         <Image style={styles.backImage} />
@@ -125,16 +125,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     navContainer: {
-        height: Theme.statusBarHeight + Theme.themes.default.navBarContentHeight,
-        backgroundColor: 'blue',
-    },
-    statusBar: {
-        height: Theme.statusBarHeight - 15,
-        // backgroundColor: 'green',
+        height: Theme.themes.default.navBarContentHeight,
+        // backgroundColor: 'blue',
     },
     navContent: {
-        flex: 1,
-        backgroundColor: 'red',
+        height: Theme.themes.default.navBarContentHeight,
+        // backgroundColor: 'red',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

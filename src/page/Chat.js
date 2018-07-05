@@ -89,8 +89,12 @@ class Chat extends React.PureComponent {
         // 大部分情况下这三行代码应该写在登陆处，保持全局只有一个ChatManager，目前测试的话可以在这里写
         // 最好结合Mobx
         const url = 'ws://wmbchat.nididake.com:9502'
-        this._chatManager = new ChatManager({ webSocketUrl: url, token: 'gejqgqoo42342' })
-        this._chatManager.onChatMessage = this._onChatMessage
+        const params = {
+            webSocketUrl: url,
+            token: 'gejqgqoo42342',
+            onChatMessage: this._onChatMessage
+        }
+        this._chatManager = new ChatManager(params)
     }
 
     _onChatMessage = (data) => {
