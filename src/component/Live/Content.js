@@ -11,15 +11,15 @@ class Content extends React.PureComponent {
 
     static propTypes = {
         messages: PropTypes.array,
-        giftsData: PropTypes.array,
+        giftData: PropTypes.object,
     }
 
     static defaultProps = {
-
+        giftData: null
     }
 
     render() {
-        const { messages, giftsData, giftData } = this.props
+        const { messages, giftData } = this.props
         return (
             <View style={styles.container}>
                 <SegmentedView indicatorLineColor="#01B9A0">
@@ -40,7 +40,7 @@ class Content extends React.PureComponent {
 
                     </View>
                 </SegmentedView>
-                <GiftSE giftsData={giftsData} giftData={giftData} />
+                <GiftSE giftData={giftData} />
             </View>
         );
     }

@@ -3,23 +3,22 @@ import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, Animated } from 'react-native';
 import PropTypes from 'prop-types'
 
-
-class GiftSE extends React.PureComponent {
+class GiftSE extends React.Component {
 
     static propTypes = {
-        giftsData: PropTypes.array
+        giftData: PropTypes.object
     }
 
     static defaultProps = {
-        giftsData: []
+        giftsData: null
     }
 
     constructor(props) {
         super(props);
-        this.state = { currentGifts: [] }
-        this.currentGifts = [] // 当前礼物的
-        this.giftIndex = 0 // 当前正在执行动画的礼物
-        this.translateX = new Animated.Value(-200)
+        this.state = { currentGift: { message_id: -1 } }
+        this.giftsData = [] // 
+
+        this.translateX = new Animated.Value(-230)
         this.translateY = new Animated.Value(0)
         this.opacity = new Animated.Value(1)
 
@@ -39,43 +38,48 @@ class GiftSE extends React.PureComponent {
         this.isCycle = false
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const newGift = nextProps.giftData
+        const currentGift = this.state.currentGift
+        console.log('shouldComponentUpdate', newGift, currentGift.message_id)
+        if (this.animateding) {
+            return false
+        } else if (!newGift || newGift.message_id === currentGift.message_id) {
+            return false
+        } else {
+            return true
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         const newGift = nextProps.giftData
-        const array = this.state.currentGifts
-        const lastOldGift = array[array.length - 1]
+        const currentGift = this.state.currentGift
+        const lastOldGift = this.giftsData[this.giftsData.length - 1]
         if (lastOldGift) {
             console.log('lastOldGift', lastOldGift, newGift)
             if (lastOldGift.message_id != newGift.message_id) {
-                array.push(newGift)
-                this.setState({ currentGifts: array }, () => {
-                    this.showGiftAnimation()
-                })
+                this.giftsData.push(newGift)
             }
-        } else {
-            array.push(newGift)
-            this.setState({ currentGifts: array }, () => {
+        } else if (newGift && newGift.message_id != currentGift.message_id) {
+            console.log('数组为0', newGift)
+            this.giftsData.push(newGift)
+            this.setState({ currentGift: newGift }, () => {
                 this.showGiftAnimation()
             })
         }
-        // const oldGiftsData = this.props.giftsData
-        // const newGiftsData = nextProps.giftsData
-        // if (oldGiftsData.length < newGiftsData.length && newGiftsData.length != 0) {
-        //     // 执行礼物动画
-
-        // }
-        // this.currentGifts = newGiftsData
     }
 
     initAnimated = () => {
-        this.translateX.setValue(-200)
+        this.translateX.setValue(-250)
         this.translateY.setValue(0)
         this.opacity.setValue(1)
     }
 
     showGiftAnimation = () => {
-        const { currentGifts } = this.state
-        console.log('currentGifts', currentGifts)
-        if (currentGifts.length === 0) {
+        if (this.giftsData.length === 0) {
+            return
+        }
+        if (!this.isCycle) {
             return
         }
         if (this.animateding) {
@@ -101,29 +105,28 @@ class GiftSE extends React.PureComponent {
                     useNativeDriver: true
                 })
             ])
-        ]).start((finsh) => {
+        ]).start((completion) => {
             this.initAnimated()
             this.animateding = false
-            if (finsh && this.isCycle) {
-                let array = this.state.currentGifts
-                this.setState({ currentGifts: array.slice(1) }, () => {
-                    console.log(this.state.currentGifts)
-                    this.showGiftAnimation()
-                })
+            if (completion) {
+                this.giftsData = this.giftsData.slice(1)
+                console.log(this.giftsData)
+                if (this.giftsData.length != 0) {
+                    this.setState({ currentGift: this.giftsData[0] }, () => {
+                        this.showGiftAnimation()
+                    })
+                }
             }
         })
     }
 
     render() {
-        const { giftsData } = this.props
-        const { currentGifts } = this.state
-        let ceshi = null
-        if (currentGifts.length > 0) {
-            ceshi = currentGifts[0].message_id
+        const { currentGift } = this.state
+        let text = ''
+        if (currentGift) {
+            text = currentGift.message_id
         }
-        console.log('ceshi')
-        // const ceshi = currentGifts[0] && currentGifts[0].message_id
-        // console.log('ceshi', currentGifts[0].message_id)
+        console.log('currentGiftcurrentGift')
         return (
             <Animated.View style={[styles.container, {
                 transform: [
@@ -132,8 +135,18 @@ class GiftSE extends React.PureComponent {
                 ],
                 opacity: this.opacity,
             }]}>
-                {/* <Image /> */}
-                <Text>{ceshi}</Text>
+                <View >
+                    <Image style={styles.imageBack} />
+                    <View style={styles.contentContainer}>
+                        <Image style={styles.userHeader} source={{ uri: currentGift.send_head }} />
+                        <View style={styles.userContainer}>
+                            <Text style={styles.userName}>{currentGift.send_uname}</Text>
+                            <Text style={styles.giftInfo}>{text}</Text>
+                        </View>
+                        <Image style={styles.giftImage} />
+                        <Text style={styles.giftConunt}>x88</Text>
+                    </View>
+                </View>
             </Animated.View>
         );
     }
@@ -143,9 +156,53 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         top: 100,
-        width: 200,
+        // width: 200,
+        // height: 50,
+        // backgroundColor: 'red',
+    },
+    imageBack: {
+        position: 'absolute',
+        bottom: 0,
+        width: 150,
         height: 50,
+        backgroundColor: 'blue',
+    },
+    userHeader: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        marginBottom: 16,
+        zIndex: 10,
+    },
+    contentContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        marginLeft: 5,
+        // backgroundColor: 'red',
+    },
+    userContainer: {
+        marginBottom: 5,
+        marginLeft: 10,
+    },
+    userName: {
+        color: '#fff',
+        fontSize: FontSize(15),
+        marginBottom: 5,
+    },
+    giftInfo: {
+        color: '#fff',
+        fontSize: FontSize(11),
+    },
+    giftImage: {
+        width: 55,
+        height: 55,
         backgroundColor: 'red',
+        marginLeft: 10,
+    },
+    giftConunt: {
+        color: '#6D32F4',
+        fontSize: FontSize(38),
+        marginLeft: 10,
     }
 });
 

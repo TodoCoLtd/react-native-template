@@ -1,22 +1,17 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- */
-
-import React, { Component } from 'react'
+'use strict';
+import React from 'react'
 import { Platform, } from 'react-native'
 import './src/config/Global'
 import { Provider } from 'mobx-react'
 import stores from './src/store/index'
-import Navigation from './src/router/Navigation'
+import Main from './src/page/Main'
 
-class App extends Component {
+class App extends React.PureComponent {
 
     render() {
         return (
             <Provider {...stores}>
-                <Navigation />
+                <Main />
             </Provider>
         );
     }

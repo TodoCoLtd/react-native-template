@@ -1,11 +1,11 @@
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Clipboard } from 'react-native';
 import { ActionSheet, Overlay, Label } from 'teaset';
 import { fontSize, bouncer } from '../util/Tool';
 import AreaContent from '../component/AreaContent';
 import ShareContent from '../component/ShareContent';
-import Theme from './Theme';
+import JShareModule from 'jshare-react-native';
 
 class ActionsManager {
 
@@ -25,7 +25,7 @@ class ActionsManager {
      * 
      */
     // 先使用teaset自带的组件，后续自定义组件
-    static show = (params) => {
+    static show(params) {
         const actions = params.actions
         const cancelAction = params.cancelAction
         ActionSheet.show(actions, cancelAction)
@@ -37,6 +37,36 @@ class ActionsManager {
 
     static showArea(func) {
         this.showPullView(<AreaContent onPress={func} />, {})
+    }
+
+    static showShareModule(params) {
+        const { type, url, title, text } = params
+        ActionsManager.showShare((item) => {
+            let platform;
+            switch (item) {
+                case 1:
+                    // 微信
+                    platform = 'wechat_session'
+                    break;
+                case 2:
+                    // 微信
+                    platform = 'wechat_session'
+                    break;
+                case 3:
+                    Clipboard.setString(url)
+                    ToastManager.show('已复制到剪切板')
+                    break;
+
+                default:
+                    break;
+            }
+            const params = { type, platform, url, title, text, imageUrl: Constants.ICON_APP }
+            JShareModule.share(params, (success) => {
+                ToastManager.show('分享成功!')
+            }, (error) => {
+                ToastManager.show('分享失败!')
+            })
+        })
     }
 
     static showPullView(component, option) {

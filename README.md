@@ -43,7 +43,7 @@ note:如果想使用`Redux`，请自行引入。
         "react-native-splash-screen": "^3.0.6",
         "react-native-storage": "^0.2.2",
         "react-navigation": "^1.5.11",
-        "teaset": "^0.5.6"
+        "teaset": "^0.5.8"
      
 
 # 组件 （待补充）

@@ -106,7 +106,6 @@ class LivePage extends React.PureComponent {
             const newMessages = [{ ...data, type: 2 }] // 类型：礼物
             this.setState({
                 messages: newMessages.concat(oldMessages),
-                giftsData: newMessages.concat(oldGiftsData),
                 giftData: { ...data, type: 2 }
             })
         } else {
@@ -115,7 +114,7 @@ class LivePage extends React.PureComponent {
     }
 
     render() {
-        const { messages, giftsData, giftData } = this.state
+        const { messages, giftData } = this.state
         return (
             <Container>
                 <LivePlayer
@@ -123,7 +122,6 @@ class LivePage extends React.PureComponent {
                     playerStyle={{ width: 375, height: 220 }}
                     source={{ uri: 'rtmp://live.hkstv.hk.lxdns.com/live/hks' }}
                     messages={messages}
-                    giftsData={giftsData}
                     giftData={giftData}
                     onPressRecharge={this._onPressRecharge}
                     onPressGift={this._onPressGift}

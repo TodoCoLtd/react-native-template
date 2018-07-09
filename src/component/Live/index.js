@@ -112,7 +112,7 @@ class Index extends React.PureComponent {
     }
 
     render() {
-        const { style, source, messages, giftsData, giftData, onPressRecharge, onPressGift, onPressSend } = this.props
+        const { style, source, messages, giftData, onPressRecharge, onPressGift, onPressSend } = this.props
         const { playerStyle, isLandscape } = this.state
         const { left, right, top, bottom } = Theme.screenInset
         console.log('render', isLandscape)
@@ -139,7 +139,7 @@ class Index extends React.PureComponent {
                         onPressScale={this._onPressScale}
                     />
                 </View>
-                <Content messages={messages} giftsData={giftsData} giftData={giftData} />
+                <Content messages={messages} giftData={giftData} />
                 <ToolContainer
                     onPressSend={onPressSend}
                     onPressRecharge={onPressRecharge}

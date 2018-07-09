@@ -12,7 +12,7 @@ import Chat from '../page/Chat';
 import LivePage from '../page/LivePage';
 
 
-const Tab = createBottomTabNavigator({
+const TabNavigator = createBottomTabNavigator({
     Home: {
         screen: Home, navigationOptions: tabOptions({
             title: '首页',
@@ -47,8 +47,8 @@ const Tab = createBottomTabNavigator({
         initialRouteName: 'Home'
     });
 
-const Nav = createStackNavigator(configRouter({
-    Tab: { screen: Tab },
+const StackNavigator = createStackNavigator(configRouter({
+    Tab: { screen: TabNavigator },
     Mine: { screen: Mine },
     Setting: { screen: Setting },
     LoginAndRegistered: { screen: LoginAndRegistered },
@@ -79,4 +79,4 @@ const Nav = createStackNavigator(configRouter({
         }
     });
 
-export default Nav
+export { StackNavigator } 

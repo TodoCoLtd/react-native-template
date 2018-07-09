@@ -1,34 +1,24 @@
 'use strict';
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import SplashScreen from 'react-native-splash-screen'
-import Nav from './RouterConfig'
+import React from 'react'
+import { StackNavigator } from './RouterConfig'
 
-
+// 高阶导航，继承PureComponent
 class Navigation extends React.PureComponent {
 
-    componentDidMount() {
-        SplashScreen.hide();
+    constructor(props) {
+        super(props)
+
     }
 
     _captureRef = (v) => {
-        this.navigationRef = v
+        this.navigatorRef = v
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <Nav ref={this._captureRef} />
-            </View>
+            <StackNavigator ref={this._captureRef} />
         );
     }
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Theme.pageBackgroundColor,
-    },
-});
-
 
 export default Navigation;
