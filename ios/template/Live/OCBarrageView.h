@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "OCBarrage.h"
+#import <React/RCTView.h>
 
-@interface OCBarrageView : UIView
+@interface OCBarrageView : RCTView
 
 @property (nonatomic,strong) OCBarrageManager *barrageManager;
+
+@property (nonatomic, copy) RCTBubblingEventBlock onAction;
 
 -(void)addNormalContent:(NSString *)content option:(NSDictionary *)option;
 -(void)releaseOCBarrage;

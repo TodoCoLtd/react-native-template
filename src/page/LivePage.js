@@ -6,12 +6,10 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import NavigationBar from '../component/NavigationBar';
 import Container from '../component/Container';
-import SpinnerLoading from '../component/SpinnerLoading';
-import LivePlayer from '../component/Live/index';
-import ChatManager from '../component/Live/ChatGroup/ChatManager'
-import ChatConstants from '../component/Live/ChatGroup/Constants';
+// 直播
+import { Liver, ChatManager, ChatConstants, GiftSender } from '../component/Live/index';
+
 
 class LivePage extends React.PureComponent {
 
@@ -57,19 +55,15 @@ class LivePage extends React.PureComponent {
         AlertManager.show(params)
     }
 
-    _onPressGift = async () => {
-        // const params = {
-        //     title: '温馨提示',
-        //     detail: '弹出礼物界面',
-        //     actions: [
-        //         { title: '确定', onPress: () => { } }
-        //     ]
-        // }
-        // AlertManager.show(params)
+    _onPressGift = () => {
+        ActionsManager.showPullView(<GiftSender onPressSend={this._onPressSendGift} />, { overlayOpacity: 0.02 })
+    }
+
+    _onPressSendGift = async () => {
+        ActionsManager.hide()
         let url = 'http://liangcai.3todo.com/api/live/buy_gift'
         let result = await Services.post(url, { gift_code: 'gift_code_1', stream_id: 1, member_id: 1 })
         console.log(result)
-
     }
 
     _onPressSend = (text) => {
@@ -117,7 +111,7 @@ class LivePage extends React.PureComponent {
         const { messages, giftData } = this.state
         return (
             <Container>
-                <LivePlayer
+                <Liver
                     style={{ flex: 1 }}
                     playerStyle={{ width: 375, height: 220 }}
                     source={{ uri: 'rtmp://live.hkstv.hk.lxdns.com/live/hks' }}

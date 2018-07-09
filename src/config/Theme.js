@@ -1,4 +1,4 @@
-import { Dimensions, Platform, Text, StyleSheet } from 'react-native'
+import { Dimensions, Platform, Text, StyleSheet, StatusBar } from 'react-native'
 import { Theme } from 'teaset'
 import { fontSize, scaleSize } from '../util/Tool';
 

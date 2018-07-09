@@ -12,7 +12,7 @@
 
 @interface LivePlayerManager()
 
-@property (nonatomic,strong) LivePlayer *livePlayer ;
+@property (nonatomic,weak) LivePlayer *livePlayer ;
 
 @end
 
@@ -21,12 +21,16 @@
 RCT_EXPORT_MODULE();
 
 - (UIView *)view {
-  _livePlayer = [[LivePlayer alloc] init];
+  LivePlayer *livePlayer = [[LivePlayer alloc] init];
+  _livePlayer = livePlayer;
   return _livePlayer;
 }
 
 - (dispatch_queue_t)methodQueue {
   return dispatch_get_main_queue();
+}
+-(void)dealloc {
+  _livePlayer = nil;
 }
 
 RCT_EXPORT_VIEW_PROPERTY(source, NSDictionary);

@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
 import { Theme } from 'teaset';
+import { scaleSize } from '../../util/Tool';
 
 class PlayerTools extends React.PureComponent {
 
@@ -9,6 +10,7 @@ class PlayerTools extends React.PureComponent {
         super(props);
         this.isHidden = true
         this.opacity = new Animated.Value(0)
+        this.state = { isPlay: true, isEnlarge: false }
     }
 
     startFadeAnimated = () => {
@@ -20,51 +22,109 @@ class PlayerTools extends React.PureComponent {
         }).start()
     };
 
+    _onPressLeft = () => {
+        const { onPressLeft } = this.props
+        const { isEnlarge } = this.state
+        if (isEnlarge) {
+            this.setState({ isEnlarge: false })
+        }
+        onPressLeft && onPressLeft()
+    }
+
     _onPressfull = () => {
         this.startFadeAnimated()
     };
 
     _onPressPlay = () => {
-        alert('zz')
         const { onPressPlay } = this.props
+        const { isPlay } = this.state
+        if (this.isHidden) {
+            this.startFadeAnimated()
+            return;
+        }
+        this.setState({ isPlay: !isPlay })
         onPressPlay && onPressPlay()
     }
 
     _onPressVideo = () => {
         const { onPressVideo } = this.props
+        if (this.isHidden) {
+            this.startFadeAnimated()
+            return;
+        }
         onPressVideo && onPressVideo()
+    }
+
+    _onPressDanMu = () => {
+        const { onPressDanMu, isLandscape } = this.props
+        if (!isLandscape) {
+            return;
+        }
+        if (this.isHidden) {
+            this.startFadeAnimated()
+            return;
+        }
+        onPressDanMu && onPressDanMu()
     }
 
     _onPressRefresh = () => {
         const { onPressRefresh } = this.props
+        if (this.isHidden) {
+            this.startFadeAnimated()
+            return;
+        }
         onPressRefresh && onPressRefresh()
     }
 
     _onPressScale = () => {
         const { onPressScale } = this.props
+        const { isEnlarge } = this.state
+        if (this.isHidden) {
+            this.startFadeAnimated()
+            return;
+        }
+        this.setState({ isEnlarge: !isEnlarge })
         onPressScale && onPressScale()
     }
 
     render() {
-        const { style } = this.props
+        const { style, isLandscape, showDanMu } = this.props
+        const { isPlay, isEnlarge } = this.state
+        let source;
+        if (isLandscape) {
+            source = showDanMu ? Images.icon_danmu : Images.icon_danmu_no
+        } else {
+            source = null
+        }
         return (
             <TouchableWithoutFeedback onPress={this._onPressfull}>
                 <Animated.View style={[styles.container, style, { opacity: this.opacity }]}>
-                    <NavTools />
+                    <NavTools onPressLeft={this._onPressLeft} />
                     <BottomTools
+                        isEnlarge={isEnlarge}
                         onPress={this._onPressScale}
+                    />
+                    <Tool
+                        type={'弹幕'}
+                        style={styles.danmuTool}
+                        source={source}
+                        onPress={this._onPressDanMu}
                     />
                     <Tool
                         type={'播放'}
                         style={styles.playTool}
+                        source={isPlay ? Images.icon_bottom_pause : Images.icon_bottom_play}
                         onPress={this._onPressPlay}
                     />
-                    <Tool type={'视频'}
+                    <Tool
+                        type={'视频'}
                         style={styles.videoTool}
                         onPress={this._onPressVideo}
                     />
-                    <Tool type={'刷新'}
+                    <Tool
+                        type={'刷新'}
                         style={styles.refreshTool}
+                        source={Images.icon_live_refresh}
                         onPress={this._onPressRefresh}
                     />
                 </Animated.View>
@@ -76,16 +136,17 @@ class PlayerTools extends React.PureComponent {
 class NavTools extends React.PureComponent {
 
     render() {
+        const { onPressLeft } = this.props
         return (
             <View style={styles.navContainer}>
                 {/* <View style={styles.statusBar} /> */}
                 <View style={styles.navContent}>
-                    <TouchableOpacity style={styles.backTouch}>
-                        <Image style={styles.backImage} />
+                    <TouchableOpacity style={styles.backTouch} onPress={onPressLeft}>
+                        <Image resizeMode={'contain'} style={styles.backImage} source={Images.icon_nav_left} />
                     </TouchableOpacity>
                     <Text style={styles.navTitle}> 综合直播-刮刮乐 </Text>
                     <TouchableOpacity style={styles.rightTouch}>
-                        <Image style={styles.rightImage} />
+                        <Image resizeMode={'contain'} style={styles.rightImage} source={Images.icon_more} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -99,7 +160,7 @@ class Tool extends React.PureComponent {
         const { style, source, onPress } = this.props
         return (
             <TouchableOpacity style={style} onPress={onPress} >
-                <Image style={styles.toolImage} source={source} />
+                <Image resizeMode={'contain'} style={styles.toolImage} source={source} />
             </TouchableOpacity>
         );
     }
@@ -108,12 +169,12 @@ class Tool extends React.PureComponent {
 class BottomTools extends React.PureComponent {
 
     render() {
-        const { onPress } = this.props
+        const { onPress, isEnlarge } = this.props
         return (
             <View style={styles.bottomContainer}>
                 <Text style={styles.bottomRightText}>观看人数：1.9万</Text>
                 <TouchableOpacity style={styles.scaleTouch} onPress={onPress}>
-                    <Image style={styles.scaleImage} />
+                    <Image resizeMode={'contain'} style={styles.scaleImage} source={isEnlarge ? Images.icon_micrify : Images.icon_enlarge} />
                 </TouchableOpacity>
             </View>
         );
@@ -147,9 +208,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     backImage: {
-        width: 10,
-        height: 18,
-        backgroundColor: 'red',
+        width: scaleSize(55),
+        height: scaleSize(55),
+        // backgroundColor: 'red',
     },
     rightTouch: {
         width: 30,
@@ -159,9 +220,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     rightImage: {
-        width: 10,
-        height: 18,
-        backgroundColor: 'red',
+        width: scaleSize(40),
+        height: scaleSize(35),
+        // backgroundColor: 'red',
     },
 
 
@@ -171,6 +232,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginBottom: 10,
     },
     bottomRightText: {
         fontSize: FontSize(12),
@@ -185,32 +247,37 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     scaleImage: {
-        width: 10,
-        height: 18,
-        backgroundColor: 'red',
+        width: ScaleSize(35),
+        height: ScaleSize(35),
+        // backgroundColor: 'red',
     },
 
 
     toolImage: {
-        width: 10,
-        height: 18,
-        backgroundColor: 'red',
+        width: ScaleSize(40),
+        height: ScaleSize(40),
+        // backgroundColor: 'red',
     },
     playTool: {
         position: 'absolute',
-        bottom: 50,
+        bottom: 55,
         left: 20,
     },
     videoTool: {
         position: 'absolute',
-        right: 20,
-        bottom: 80
+        right: 15,
+        bottom: 90
     },
     refreshTool: {
         position: 'absolute',
-        right: 20,
-        bottom: 45
+        right: 15,
+        bottom: 55
     },
+    danmuTool: {
+        position: 'absolute',
+        bottom: 90,
+        left: 20,
+    }
 });
 
 export default PlayerTools

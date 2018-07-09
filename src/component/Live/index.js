@@ -8,8 +8,12 @@ import PlayerTools from './PlayerTools'
 import ToolContainer from './ToolContainer';
 import Content from './Content';
 import OCBarrage from './OCBarrage';
+import ChatManager from './ChatGroup/ChatManager'
+import ChatConstants from './ChatGroup/Constants';
+import GiftSender from './GiftSender';
 
-class Index extends React.PureComponent {
+
+class Liver extends React.PureComponent {
 
     static propTypes = {
         source: PropTypes.shape({ uri: PropTypes.string }).isRequired,
@@ -20,16 +24,20 @@ class Index extends React.PureComponent {
 
     static defaultProps = {
         messages: [],
-        giftsData: []
+        giftsData: [],
     }
 
     constructor(props) {
         super(props);
         const { playerStyle } = this.props
-        this.state = { playerStyle, isLandscape: false }
+        this.state = { playerStyle, isLandscape: false, showDanMu: true }
     }
 
     componentDidMount() {
+        const { showDanMu } = this.state
+        if (showDanMu) {
+            this.barrageRef && this.barrageRef.startRender()
+        }
         Orientation.addOrientationListener(this._orientationDidChange)
     }
 
@@ -38,11 +46,11 @@ class Index extends React.PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
+        const { isLandscape, showDanMu } = this.state
         const oldMessages = this.props.messages
         const newMessages = nextProps.messages
         const msg = newMessages[0]
-        if (newMessages.length > oldMessages.length && msg.type === 1) {
+        if (newMessages.length > oldMessages.length && msg.type === 1 && isLandscape && showDanMu) {
             // 有新消息，发送弹幕
             const text = msg.message
             this.barrageRef.senderOCBarrage(text)
@@ -86,8 +94,31 @@ class Index extends React.PureComponent {
         // alert('播放视频')
     }
 
+    _onPressDanMu = () => {
+        const { isLandscape, showDanMu } = this.state
+        if (!isLandscape) {
+            return
+        }
+        if (showDanMu) {
+            this.barrageRef.stopRender()
+            this.setState({ showDanMu: false })
+        } else {
+            this.barrageRef.startRender()
+            this.setState({ showDanMu: true })
+        }
+    }
+
     _onPressRefresh = () => {
         this.livePlayer.replay()
+    }
+
+    _onPressLeft = () => {
+        const { isLandscape } = this.state
+        if (isLandscape) {
+            this._onPressScale()
+        } else {
+            alert('返回')
+        }
     }
 
     _onPressScale = () => {
@@ -113,9 +144,7 @@ class Index extends React.PureComponent {
 
     render() {
         const { style, source, messages, giftData, onPressRecharge, onPressGift, onPressSend } = this.props
-        const { playerStyle, isLandscape } = this.state
-        const { left, right, top, bottom } = Theme.screenInset
-        console.log('render', isLandscape)
+        const { playerStyle, isLandscape, showDanMu } = this.state
         return (
             <View style={[styles.container, style]}>
                 <View style={[styles.statusBar, { height: isLandscape ? 20 : Theme.statusBarHeight }]} />
@@ -133,10 +162,14 @@ class Index extends React.PureComponent {
                     />
                     <PlayerTools
                         style={styles.playerTools}
+                        isLandscape={isLandscape}
+                        showDanMu={showDanMu}
                         onPressPlay={this._onPressPlay}
                         onPressVideo={this._onPressVideo}
                         onPressRefresh={this._onPressRefresh}
                         onPressScale={this._onPressScale}
+                        onPressLeft={this._onPressLeft}
+                        onPressDanMu={this._onPressDanMu}
                     />
                 </View>
                 <Content messages={messages} giftData={giftData} />
@@ -172,8 +205,8 @@ const styles = StyleSheet.create({
         right: 0,
     },
     playerContainer: {
-        backgroundColor: 'red',
+        backgroundColor: 'red'
     }
 });
 
-export default Index
+export { Liver, ChatManager, ChatConstants, GiftSender } 

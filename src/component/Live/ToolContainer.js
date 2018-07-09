@@ -1,6 +1,8 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, KeyboardAvoidingView } from 'react-native';
+import Images from '../../asset';
+import { scaleSize } from '../../util/Tool';
 
 class ToolContainer extends React.PureComponent {
 
@@ -16,7 +18,6 @@ class ToolContainer extends React.PureComponent {
     _onSubmitEditing = () => {
         const { onPressSend } = this.props
         onPressSend && onPressSend(this.inputText)
-        this.inputRef.clear()
         this.inputText = ''
     }
 
@@ -30,7 +31,7 @@ class ToolContainer extends React.PureComponent {
             <KeyboardAvoidingView behavior={'padding'}>
                 <View style={styles.container}>
                     <View style={styles.inputContainer}>
-                        <Image style={styles.textInputImage} />
+                        <Image style={styles.textInputImage} source={Images.icon_live_text} />
                         <TextInput
                             ref={this._captureRef}
                             style={styles.textInput}
@@ -39,13 +40,14 @@ class ToolContainer extends React.PureComponent {
                             onSubmitEditing={this._onSubmitEditing}
                             onChangeText={this._onChangeText}
                             underlineColorAndroid={'transparent'}
+                            clearTextOnFocus={true}
                         />
                     </View>
                     <TouchableOpacity style={styles.rechargeTouch} onPress={onPressRecharge}>
-                        <Image style={styles.rechargeImage} />
+                        <Image style={styles.rechargeImage} source={Images.icon_bar_recharge} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.giftTouch} onPress={onPressGift}>
-                        <Image style={styles.giftImage} />
+                        <Image style={styles.giftImage} source={Images.icon_bar_gift} />
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
@@ -74,25 +76,25 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     textInputImage: {
-        width: 20,
-        height: 20,
+        width: ScaleSize(30),
+        height: ScaleSize(30),
         backgroundColor: 'blue',
     },
     rechargeTouch: {
         marginRight: 10,
     },
     rechargeImage: {
-        width: 40,
-        height: 40,
-        backgroundColor: 'blue',
+        width: ScaleSize(60),
+        height: ScaleSize(60),
+        // backgroundColor: 'blue',
     },
     giftTouch: {
         marginRight: 10,
     },
     giftImage: {
-        width: 40,
-        height: 40,
-        backgroundColor: 'blue',
+        width: ScaleSize(60),
+        height: ScaleSize(60),
+        // backgroundColor: 'blue',
     },
 });
 

@@ -24,7 +24,7 @@ class AlertManager {
         this.showPopView(<AlertContent {...params} />, {})
     }
 
-    static showPopView(component, option) {
+    static showPopView(component, option = {}) {
         this.popViewRefs = bouncer(this.popViewRefs.slice()) // 过滤
         if (this.popViewRefs.length === 0) {
             Overlay.show(

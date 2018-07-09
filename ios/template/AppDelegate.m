@@ -58,7 +58,7 @@
   
  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];  // allow
   
-  [SplashScreen show];  // here
+//  [SplashScreen show];  // here
   
   return YES;
 }

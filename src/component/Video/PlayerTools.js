@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Animated, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, Text, StyleSheet, Animated, TouchableWithoutFeedback, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types'
 import { sec_to_time } from '../../util/Tool'
 import Slider from './Slider';
@@ -93,10 +93,9 @@ class PlayerTools extends React.PureComponent {
         return (
             <TouchableWithoutFeedback onPress={this._onPressfull}>
                 <Animated.View style={[styles.container, style, { opacity: this.opacity }]}>
-                    <Text style={{ color: '#FFFFFF', marginLeft: 20, marginTop: 30 }}
-                        onPress={this._onPressBack}>
-                        返回
-                    </Text>
+                    <TouchableOpacity style={styles.backTouch}>
+                        <Image style={styles.backImage} source={Images.icon_nav_left} />
+                    </TouchableOpacity>
                     <CenterView isPaused={this.state.isPaused} onPress={this._onPressLeft} />
                     <View style={styles.bottomContainer}>
                         <LeftView isPaused={this.state.isPaused} onPress={this._onPressLeft} />
@@ -205,6 +204,14 @@ const styles = StyleSheet.create({
         height: ScaleSize(30),
         marginLeft: ScaleSize(15),
         marginRight: ScaleSize(15),
+    },
+    backTouch: {
+
+    },
+    backImage: {
+        width: ScaleSize(30),
+        height: ScaleSize(30),
+        backgroundColor: 'blue',
     }
 });
 

@@ -11,7 +11,7 @@
 
 @interface OCBarrageViewManager()
 
-@property (nonatomic,strong) OCBarrageView *ocbarrageView ;
+@property (nonatomic,weak) OCBarrageView *ocbarrageView ;
 
 @end
 
@@ -21,13 +21,17 @@
 RCT_EXPORT_MODULE();
 
 - (UIView *)view {
-  _ocbarrageView = [[OCBarrageView alloc] init];
-  
+  OCBarrageView *view = [[OCBarrageView alloc] init];
+  _ocbarrageView = view;
   return _ocbarrageView;
 }
 
 - (dispatch_queue_t)methodQueue {
   return dispatch_get_main_queue();
+}
+
+-(void)dealloc {
+  _ocbarrageView = nil;
 }
 
 
