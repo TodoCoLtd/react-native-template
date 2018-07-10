@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Orientation from 'react-native-orientation';
 import NavigationBar from '../component/NavigationBar'
 import Container from '../component/Container';
-import VideoPlayer from '../component/Video/index'
+import VideoPlayer from '../component/video/index'
 import { Button } from 'teaset';
 
 // create a component

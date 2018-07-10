@@ -8,7 +8,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Container from '../component/Container';
 // 直播
-import { Liver, ChatManager, ChatConstants, GiftSender } from '../component/Live/index';
+import { Liver, ChatManager, ChatConstants, GiftSender } from '../component/live/index';
 
 
 class LivePage extends React.PureComponent {

@@ -2,8 +2,6 @@
 import React, { Component } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import NavigationBar from '../component/NavigationBar'
-import FlatListView from '../component/FlatListView'
-import SectionListView from '../component/SectionListView';
 import Container from '../component/Container';
 class Mine extends Component {
 
