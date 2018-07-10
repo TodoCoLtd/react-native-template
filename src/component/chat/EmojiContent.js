@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import ToolAnimated from './ToolAnimated';
-import EmotionsView from './EmojiText/EmotionsView'
+import EmotionsView from './emojiText/EmotionsView'
 
 
 class EmojiContent extends React.PureComponent {

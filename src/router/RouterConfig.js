@@ -57,7 +57,7 @@ const StackNavigator = createStackNavigator(configRouter({
     Chat: { screen: Chat },
     LivePage: { screen: LivePage },
 }), {
-        initialRouteName: 'LivePage',
+        initialRouteName: 'Tab',
         cardStyle: {
             shadowOpacity: 0,
             shadowRadius: 0,

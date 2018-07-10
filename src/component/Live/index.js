@@ -8,8 +8,8 @@ import PlayerTools from './PlayerTools'
 import ToolContainer from './ToolContainer';
 import Content from './Content';
 import OCBarrage from './OCBarrage';
-import ChatManager from './ChatGroup/ChatManager'
-import ChatConstants from './ChatGroup/Constants';
+import ChatManager from './chatGroup/ChatManager'
+import ChatConstants from './chatGroup/Constants';
 import GiftSender from './GiftSender';
 
 

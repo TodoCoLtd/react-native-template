@@ -2,9 +2,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import PropTypes from 'prop-types'
-import SegmentedView from '../SegmentedView/index'
+import SegmentedView from '../segmentedView/index'
 import SegmentedControlTab from '../SegmentedControlTab';
-import ChatGroupPage from './ChatGroup/index';
+import ChatGroupPage from './chatGroup/index';
 import GiftSE from './GiftSE';
 import LiverInfo from './LiverInfo';
 

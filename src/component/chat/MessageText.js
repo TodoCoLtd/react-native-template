@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types'
-import RichText from './EmojiText/RichText'
+import RichText from './emojiText/RichText'
 
 class MessageText extends React.PureComponent {
 
