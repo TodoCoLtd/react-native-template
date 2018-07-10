@@ -40,6 +40,20 @@ const DefaultTheme = {
     alertActionHeight: 42,
     alertActionColor: '#348fe4',
     alertSeparatorColor: '#eaeaea',
+    alertTitleFontSize: fontSize(16),
+    alertTitleColor: '#000',
+    alertDetailFontSize: fontSize(13),
+    alertDetailColor: '#000',
+    alertActionFontSize: fontSize(16),
+
+    // action组件
+    actionMaxHeight: 230,
+    actionTitleFontSize: fontSize(14),
+    actionTitleColor: '#000',
+    cancelTitleFontSize: fontSize(14),
+    cancelTitleColor: '#000',
+    titleFontSize: fontSize(14),
+    titleColor: '#999',
 
     // 分享组件的样式
     shareBackColor: '#eeeeee',

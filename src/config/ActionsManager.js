@@ -5,6 +5,7 @@ import { ActionSheet, Overlay, Label } from 'teaset';
 import { fontSize, bouncer } from '../util/Tool';
 import AreaContent from '../component/AreaContent';
 import ShareContent from '../component/ShareContent';
+import ActionContent from '../component/ActionContent'
 import JShareModule from 'jshare-react-native';
 
 class ActionsManager {
@@ -24,11 +25,8 @@ class ActionsManager {
      }
      * 
      */
-    // 先使用teaset自带的组件，后续自定义组件
     static show(params) {
-        const actions = params.actions
-        const cancelAction = params.cancelAction
-        ActionSheet.show(actions, cancelAction)
+        this.showPullView(<ActionContent {...params} />)
     }
 
     static showShare(func) {

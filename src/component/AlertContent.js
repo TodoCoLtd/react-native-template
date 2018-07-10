@@ -14,7 +14,7 @@ class AlertContent extends React.PureComponent {
         titleStyle: Text.propTypes.style,
         detail: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
         detailStyle: Text.propTypes.style,
-        actions: PropTypes.array
+        actions: PropTypes.arrayOf(PropTypes.shape({ title: PropTypes.string, titleStyle: Text.propTypes.style, onPress: PropTypes.func }))
         // 例如,
         //   actions: [
         //         { title: '取消', titleStyle: {}, onPress: () => alert('取消') },
@@ -116,18 +116,18 @@ const styles = StyleSheet.create({
         marginTop: 20,
         maxWidth: Theme.alertTitleMaxWidth,
         textAlign: 'center',
-        fontSize: fontSize(16),
+        fontSize: Theme.alertTitleFontSize,
         fontWeight: 'bold',
-        color: '#000000',
+        color: Theme.alertTitleColor,
         // backgroundColor: 'red',
     },
     detail: {
         marginTop: 12,
         maxWidth: Theme.alertDetailMaxWidth,
         textAlign: 'center',
-        fontSize: fontSize(13),
+        fontSize: Theme.alertDetailFontSize,
         lineHeight: scaleSize(40),
-        color: '#000000',
+        color: Theme.alertDetailColor,
         // backgroundColor: 'blue',
     },
     actionContainer: {
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     },
     actionText: {
         color: Theme.alertActionColor,
-        fontSize: fontSize(14),
+        fontSize: Theme.alertActionFontSize,
     },
     separator: {
         borderRightWidth: StyleSheet.hairlineWidth,
