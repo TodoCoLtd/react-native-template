@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import { View, Text, StyleSheet, requireNativeComponent, NativeModules } from 'react-native';
+import { View, Text, StyleSheet, requireNativeComponent, NativeModules, findNodeHandle } from 'react-native';
 import PropTypes from 'prop-types'
 
 const OCBarrageViewManager = NativeModules.OCBarrageViewManager
@@ -11,6 +11,7 @@ class OCBarrage extends React.PureComponent {
     constructor(props) {
         super(props)
         this.ocbarrageStart = false
+        this._ocbarrageHandle = null
     }
 
     componentDidMount() {
@@ -25,7 +26,7 @@ class OCBarrage extends React.PureComponent {
 
     senderOCBarrage = (text) => {
         if (text && text != '' && this.ocbarrageStart) {
-            OCBarrageViewManager.addNormalBarrage(text, { textColor: 'red', fontSize: FontSize(15), })
+            OCBarrageViewManager.addNormalBarrage(text, { textColor: 'red', fontSize: FontSize(15), }, this._ocbarrageHandle)
         } else {
             console.warn('弹幕不能为空或者空字符串')
         }
@@ -33,15 +34,25 @@ class OCBarrage extends React.PureComponent {
 
     startRender = () => {
         if (!this.ocbarrageStart) {
-            OCBarrageViewManager.start()
+            OCBarrageViewManager.start(this._ocbarrageHandle)
             this.ocbarrageStart = true
         }
     }
 
     stopRender = () => {
         if (this.ocbarrageStart) {
-            OCBarrageViewManager.stop()
+            OCBarrageViewManager.stop(this._ocbarrageHandle)
             this.ocbarrageStart = false
+        }
+    }
+
+    _captureRef = (v) => {
+        if (v) {
+            this.ocbarrageRef = v
+            this._ocbarrageHandle = findNodeHandle(v)
+        } else {
+            this.ocbarrageRef = null
+            this._ocbarrageHandle = null
         }
     }
 
@@ -49,6 +60,7 @@ class OCBarrage extends React.PureComponent {
         const { style } = this.props
         return (
             <OCBarrageView
+                ref={this._captureRef}
                 style={style}
             />
         );

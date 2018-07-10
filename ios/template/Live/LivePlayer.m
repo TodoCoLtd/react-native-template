@@ -7,7 +7,8 @@
 //
 
 #import "LivePlayer.h"
-
+#import <React/RCTBridge.h>
+#import <React/RCTUIManager.h>
 
 @interface LivePlayer()
 

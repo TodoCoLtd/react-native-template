@@ -54,6 +54,7 @@ class Liver extends React.PureComponent {
             // 有新消息，发送弹幕
             const text = msg.message
             this.barrageRef.senderOCBarrage(text)
+            console.log('componentWillReceiveProps')
         }
     }
 

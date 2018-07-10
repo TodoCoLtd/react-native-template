@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OCBarrage.h"
 #import <React/RCTView.h>
+#import "OCBarrage.h"
 
 @interface OCBarrageView : RCTView
 
