@@ -57,7 +57,7 @@ class Setting extends Component {
             );
         } else {
             return (
-                <View style={[styles.dropDownMenuView, { backgroundColor: '#f00' }]}>
+                <View style={[styles.dropDownMenuView, { backgroundColor: '#fff' }]}>
                     <Text style={styles.dropDownMenuContext}>第三个</Text>
                 </View>
             );
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f60',
+        backgroundColor: '#fff',
     },
     dropDownMenuContext: {
         color: '#fff'

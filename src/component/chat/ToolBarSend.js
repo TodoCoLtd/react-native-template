@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
         right: 20,
         backgroundColor: '#43a4fe',
         borderRadius: 3,
-        backgroundColor: "#43a4fe",
         overflow: 'hidden',
     },
     leftContainer: {

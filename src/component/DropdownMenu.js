@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     },
     barContainer: {
         height: ScaleSize(60),
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#fff',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',

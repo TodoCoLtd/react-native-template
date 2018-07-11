@@ -62,7 +62,7 @@ const DefaultTheme = {
     shareActionRadius: 7,
     shareActionTextColor: '#000000',
     shareCancelActionHeight: scaleSize(90),
-    shareCancelBackColor: '#FFFFFF',
+    shareCancelBackColor: '#fff',
     shareCancelTextColor: '#000000',
 
     // 地区选择组件的样式
@@ -71,7 +71,7 @@ const DefaultTheme = {
     // 设置MenuManager的初始化配置，有些样式请去上方teaset里配置，目前因为时间原因先用teaset自带的组件，后续将自定义组件。
     menuOptions: {
         menuAlign: 'end',
-        menuPopoverStyle: { backgroundColor: '#FFFFFF', },
+        menuPopoverStyle: { backgroundColor: '#fff', },
         menuShowArrow: true,
         menuAnimated: true,
         menuOverlayOpacity: 0.3,

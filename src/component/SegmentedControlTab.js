@@ -142,7 +142,7 @@ class TabOption extends React.PureComponent {
 
 const styles = StyleSheet.create({
     tabsContainerStyle: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#fff',
         flexDirection: 'row',
         borderWidth: 1,
         borderColor: '#0076FF',
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#0076FF',
-        backgroundColor: 'white',
+        backgroundColor: '#fff',
         borderLeftWidth: 1,
     },
     activeTabStyle: {
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         marginBottom: 3
     },
     activeTabBadgeContainerStyle: {
-        backgroundColor: 'white'
+        backgroundColor: '#fff'
     },
     tabBadgeStyle: {
         color: 'white',

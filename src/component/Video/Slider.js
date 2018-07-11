@@ -48,7 +48,7 @@ class CusSlider extends React.PureComponent {
 // define your styles
 const styles = StyleSheet.create({
     thumbStyle: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#fff',
         width: 10,
         height: 10
     },

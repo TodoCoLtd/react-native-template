@@ -94,16 +94,17 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     dexOptions {
 //        jumboMode true
         javaMaxHeapSize "4g"
     }
     defaultConfig {
         applicationId "com.todo.template"
-        minSdkVersion 16
-        targetSdkVersion 27
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -190,14 +191,12 @@ dependencies {
     implementation project(':jpush-react-native')
     implementation project(':jcore-react-native')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
-    implementation 'com.android.support:multidex:1.0.1'
-
     //noinspection GradleCompatible
-    implementation 'com.android.support:support-v4:27.1.0'
-
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    //noinspection GradleCompatible
+    implementation "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
+    implementation 'com.android.support:multidex:1.0.1'
 
 }
 
