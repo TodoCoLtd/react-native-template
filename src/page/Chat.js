@@ -9,9 +9,7 @@ import { View, Text, StyleSheet, TouchableOpacity, } from 'react-native';
 import NavigationBar from '../component/NavigationBar';
 import Container from '../component/Container';
 import SpinnerLoading from '../component/SpinnerLoading';
-import ChatPage from '../component/chat/ChatPage'
-import ChatManager from '../component/chat/ChatManager'
-import MessagesManager from '../component/chat/MessagesManager';
+import { ChatPage, ChatManager, MessagesManager } from '../component/chat/index'
 
 class Chat extends React.PureComponent {
 
