@@ -53,7 +53,7 @@ class ActionsManager {
                 case 3:
                     Clipboard.setString(url)
                     ToastManager.show('已复制到剪切板')
-                    break;
+                    return;
 
                 default:
                     break;

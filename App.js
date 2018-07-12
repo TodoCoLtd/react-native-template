@@ -1,6 +1,5 @@
 'use strict';
 import React from 'react'
-import { Platform, } from 'react-native'
 import './src/config/Global'
 import { Provider } from 'mobx-react'
 import stores from './src/store/index'

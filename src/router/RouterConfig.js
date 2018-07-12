@@ -11,7 +11,6 @@ import VideoPage from '../page/VideoPage';
 import Chat from '../page/Chat';
 import LivePage from '../page/LivePage';
 
-
 const TabNavigator = createBottomTabNavigator({
     Home: {
         screen: Home, navigationOptions: tabOptions({
@@ -57,7 +56,7 @@ const StackNavigator = createStackNavigator(configRouter({
     Chat: { screen: Chat },
     LivePage: { screen: LivePage },
 }), {
-        initialRouteName: 'Tab',
+        initialRouteName: 'Ceshi',
         cardStyle: {
             shadowOpacity: 0,
             shadowRadius: 0,

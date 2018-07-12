@@ -113,7 +113,7 @@ class LivePage extends React.PureComponent {
             <Container>
                 <Liver
                     style={{ flex: 1 }}
-                    playerStyle={{ width: 375, height: 220 }}
+                    playerStyle={{ width: SCREEN_WIDTH, height: 220 }}
                     source={{ uri: 'rtmp://live.hkstv.hk.lxdns.com/live/hks' }}
                     messages={messages}
                     giftData={giftData}

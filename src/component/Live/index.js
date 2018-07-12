@@ -7,7 +7,7 @@ import LivePlayer from './LivePlayer'
 import PlayerTools from './PlayerTools'
 import ToolContainer from './ToolContainer';
 import Content from './Content';
-import OCBarrage from './OCBarrage';
+import Barrage from './Barrage';
 import ChatManager from './chatGroup/ChatManager'
 import ChatConstants from './chatGroup/Constants';
 import GiftSender from './GiftSender';
@@ -19,12 +19,12 @@ class Liver extends React.PureComponent {
         source: PropTypes.shape({ uri: PropTypes.string }).isRequired,
         onLiveLoadStart: PropTypes.func,
         messages: PropTypes.array,
-        giftsData: PropTypes.array,
+        giftData: PropTypes.object,
     }
 
     static defaultProps = {
         messages: [],
-        giftsData: [],
+        giftData: null,
     }
 
     constructor(props) {
@@ -54,7 +54,7 @@ class Liver extends React.PureComponent {
             // 有新消息，发送弹幕
             const text = msg.message
             this.barrageRef.senderOCBarrage(text)
-            console.log('componentWillReceiveProps')
+            console.log('componentWillReceiveProps', msg)
         }
     }
 
@@ -73,17 +73,25 @@ class Liver extends React.PureComponent {
     changeLandscapeLiveStyle = () => {
         const { playerStyle } = this.props
         setTimeout(() => {
-            console.log(Theme.screenInset)
             const { left, right, top, bottom } = Theme.screenInset
+            console.log('Theme.screenInset', Theme.screenInset)
+            let newWidth = 0, newHeight = 0
+            if (__ANDROID__) {
+                newWidth = SCREEN_HEIGHT
+                newHeight = SCREEN_WIDTH
+            } else {
+                newWidth = Theme.screenWidth
+                newHeight = Theme.screenHeight
+            }
             // 安卓减去状态栏的高度
             this.setState({
                 playerStyle: [
                     playerStyle,
-                    { width: Theme.screenWidth, height: Theme.screenHeight, }
+                    { width: newWidth, height: newHeight }
                 ],
                 isLandscape: true
             })
-            console.log(Theme.screenWidth, Theme.screenHeight)
+            console.log('w-h', Theme.screenWidth, Theme.screenHeight, Dimensions.get('window').width, Dimensions.get('window').height)
         }, 200);
     }
 
@@ -114,11 +122,12 @@ class Liver extends React.PureComponent {
     }
 
     _onPressLeft = () => {
+        const { onPressBack } = this.props
         const { isLandscape } = this.state
         if (isLandscape) {
             this._onPressScale()
         } else {
-            alert('返回')
+            onPressBack && onPressBack()
         }
     }
 
@@ -146,18 +155,17 @@ class Liver extends React.PureComponent {
     render() {
         const { style, source, messages, giftData, onPressRecharge, onPressGift, onPressSend } = this.props
         const { playerStyle, isLandscape, showDanMu } = this.state
+        const isLandscapeOffset = __IOS__ ? 20 : 0
         return (
             <View style={[styles.container, style]}>
-                <View style={[styles.statusBar, { height: isLandscape ? 20 : Theme.statusBarHeight }]} />
-                <View style={playerStyle}>
-                    <View style={[styles.playerContainer, playerStyle]}>
-                        <LivePlayer
-                            ref={this._captureRef}
-                            style={playerStyle}
-                            source={source}
-                        />
-                    </View>
-                    <OCBarrage
+                <View style={[styles.statusBar, { height: isLandscape ? isLandscapeOffset : Theme.statusBarHeight }]} />
+                <View style={[styles.playerContainer, playerStyle]}>
+                    <LivePlayer
+                        ref={this._captureRef}
+                        style={playerStyle}
+                        source={source}
+                    />
+                    <Barrage
                         ref={this._captureBarrRef}
                         style={styles.ocbarrage}
                     />
@@ -186,7 +194,7 @@ class Liver extends React.PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-
+        overflow: 'hidden',
     },
     statusBar: {
         backgroundColor: '#000',
@@ -204,9 +212,10 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
+        // backgroundColor: 'blue',
     },
     playerContainer: {
-        backgroundColor: 'red'
+        backgroundColor: '#000'
     }
 });
 

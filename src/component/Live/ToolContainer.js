@@ -28,7 +28,7 @@ class ToolContainer extends React.PureComponent {
     render() {
         const { onPressRecharge, onPressGift } = this.props
         return (
-            <KeyboardAvoidingView behavior={'padding'}>
+            <KeyboardAvoidingView behavior={__ANDROID__ ? 'height' : 'padding'} >
                 <View style={styles.container}>
                     <View style={styles.inputContainer}>
                         <Image style={styles.textInputImage} source={Images.icon_live_text} />
