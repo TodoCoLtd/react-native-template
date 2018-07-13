@@ -1,8 +1,8 @@
-// event_anme
 export default {
-    register: "_register",
-    send_barrage: "_send_barrage",
-    enter_room: "_enter_room",
-    quit_room: "_quit_room",
-    send_gift: "_send_gift",
+    REGISTER: "_register",
+    SEND_BARRAGE: "_send_barrage",
+    ENTER_ROOM: "_enter_room",
+    QUIT_RROM: "_quit_room",
+    SEND_GIFT: "_send_gift",
+    ROOM_USER_LIST: '_room_user_list'
 }

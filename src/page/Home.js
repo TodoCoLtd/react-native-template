@@ -108,6 +108,16 @@ class Home extends Component {
     onRead = (info) => {
         alert(info)
     }
+    _asd = () => {
+        const params = {
+            title: '温馨提示',
+            detail: '详细信息',
+            actions: [
+                { title: '确定', onPress: () => { } }
+            ]
+        }
+        AlertManager.show(params)
+    }
     render() {
         return (
             <Container fitIPhoneX={false} keyboardShouldPersistTaps={true}>
@@ -118,6 +128,8 @@ class Home extends Component {
                     rightViewOnPress={this.rightOnPress}
                 />
                 <Countdown />
+                <Text onPress={() => { RouteHelper.navigate('LivePage') }}>sadssss</Text>
+                <Text onPress={this._asd}>sad</Text>
                 <TextInput style={{ height: 40, width: 100, backgroundColor: 'red' }} />
                 <TextInput style={{ height: 40, width: 100, backgroundColor: 'blue' }} />
                 <TextInput style={{ height: 40, width: 100, backgroundColor: 'green' }} />

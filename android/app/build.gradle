@@ -165,8 +165,8 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-android-danmaku')
-    compile project(':react-native-ksyvideo')
+    implementation project(':react-native-android-danmaku')
+    implementation project(':react-native-ksyvideo')
     implementation project(':react-native-sound')
     implementation project(':react-native-audio')
     implementation project(':react-native-background-timer')

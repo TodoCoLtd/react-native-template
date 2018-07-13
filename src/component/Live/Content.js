@@ -7,12 +7,14 @@ import SegmentedControlTab from '../SegmentedControlTab';
 import ChatGroupPage from './chatGroup/index';
 import GiftSE from './GiftSE';
 import LiverInfo from './LiverInfo';
+import ToolContainer from './ToolContainer'
 
 class Content extends React.PureComponent {
 
     static propTypes = {
         messages: PropTypes.array,
         giftData: PropTypes.object,
+        anchor: PropTypes.object,
     }
 
     static defaultProps = {
@@ -31,7 +33,7 @@ class Content extends React.PureComponent {
     }
 
     render() {
-        const { messages, giftData } = this.props
+        const { messages, giftData, anchor, onPressLike, onPressSend, onPressRecharge, onPressGift } = this.props
         const { showLiver } = this.state
         return (
             <View style={styles.container}>
@@ -39,8 +41,13 @@ class Content extends React.PureComponent {
                     <View title={'群英会'} style={styles.container} activeTitleStyle={styles.activeTitleStyle} titleStyle={styles.titleStyle} >
                         <ChatGroupPage messages={messages} />
                         {showLiver ? (
-                            <LiverInfo style={styles.liverInfo} onClose={this._onClose} />
+                            <LiverInfo style={styles.liverInfo} anchor={anchor} onClose={this._onClose} onPressLike={onPressLike} />
                         ) : null}
+                        <ToolContainer
+                            onPressSend={onPressSend}
+                            onPressRecharge={onPressRecharge}
+                            onPressGift={onPressGift}
+                        />
                     </View>
                     <View title={'英雄榜'} style={styles.container} activeTitleStyle={styles.activeTitleStyle} titleStyle={styles.titleStyle}>
                         <SegmentedControlTab
@@ -50,7 +57,6 @@ class Content extends React.PureComponent {
                             tabTextStyle={styles.tabTextStyle}
                             values={['贡献日榜', '贡献月榜', '贡献年榜']}
                         />
-                        <Text>内容</Text>
                     </View>
                     <View title={'直播回放'} style={styles.container} activeTitleStyle={styles.activeTitleStyle} titleStyle={styles.titleStyle}>
 
@@ -64,17 +70,17 @@ class Content extends React.PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
     liverInfo: {
         // top: ScaleSize(65),
     },
     titleStyle: {
-        fontSize: FontSize(13)
+        fontSize: FontSize(14)
     },
     activeTitleStyle: {
         color: '#01B9A0',
-        fontSize: FontSize(13)
+        fontSize: FontSize(14)
     },
     tabContainer: {
         marginTop: 30,
@@ -97,6 +103,7 @@ const styles = StyleSheet.create({
     barStyle: {
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderColor: '#cdcdcd',
+        height: ScaleSize(70)
     }
 });
 

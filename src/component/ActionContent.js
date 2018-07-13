@@ -98,6 +98,7 @@ class ActionContent extends React.PureComponent {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
+        paddingBottom: Theme.isIPhoneX ? Theme.fitIPhoneXBottom : 0,
     },
     titleContainer: {
         alignItems: 'center',

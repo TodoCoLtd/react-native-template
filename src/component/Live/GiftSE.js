@@ -31,11 +31,13 @@ class GiftSE extends React.Component {
     }
 
     componentWillUnmount() {
-        this.sequenceAnimated.stop()
-        this.translateX.stopAnimation()
-        this.translateY.stopAnimation()
-        this.opacity.stopAnimation()
-        this.isCycle = false
+        if (this.sequenceAnimated) {
+            this.sequenceAnimated.stop()
+            this.translateX.stopAnimation()
+            this.translateY.stopAnimation()
+            this.opacity.stopAnimation()
+            this.isCycle = false
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {

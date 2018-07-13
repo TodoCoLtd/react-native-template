@@ -2,7 +2,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
 import { Theme } from 'teaset';
-import { scaleSize } from '../../util/Tool';
 
 class PlayerTools extends React.PureComponent {
 
@@ -88,7 +87,7 @@ class PlayerTools extends React.PureComponent {
     }
 
     render() {
-        const { style, isLandscape, showDanMu } = this.props
+        const { style, isLandscape, showDanMu, roomNumbers, title } = this.props
         const { isPlay, isEnlarge } = this.state
         let source;
         if (isLandscape) {
@@ -99,10 +98,11 @@ class PlayerTools extends React.PureComponent {
         return (
             <TouchableWithoutFeedback onPress={this._onPressfull}>
                 <Animated.View style={[styles.container, style, { opacity: this.opacity }]}>
-                    <NavTools onPressLeft={this._onPressLeft} />
+                    <NavTools onPressLeft={this._onPressLeft} title={title} />
                     <BottomTools
                         isEnlarge={isEnlarge}
                         onPress={this._onPressScale}
+                        roomNumbers={roomNumbers}
                     />
                     <Tool
                         type={'弹幕'}
@@ -136,7 +136,7 @@ class PlayerTools extends React.PureComponent {
 class NavTools extends React.PureComponent {
 
     render() {
-        const { onPressLeft } = this.props
+        const { onPressLeft, title } = this.props
         return (
             <View style={styles.navContainer}>
                 {/* <View style={styles.statusBar} /> */}
@@ -144,7 +144,7 @@ class NavTools extends React.PureComponent {
                     <TouchableOpacity style={styles.backTouch} onPress={onPressLeft}>
                         <Image resizeMode={'contain'} style={styles.backImage} source={Images.icon_nav_left} />
                     </TouchableOpacity>
-                    <Text style={styles.navTitle}> 综合直播-刮刮乐 </Text>
+                    <Text style={styles.navTitle}>{title}</Text>
                     <TouchableOpacity style={styles.rightTouch}>
                         <Image resizeMode={'contain'} style={styles.rightImage} source={Images.icon_more} />
                     </TouchableOpacity>
@@ -169,10 +169,10 @@ class Tool extends React.PureComponent {
 class BottomTools extends React.PureComponent {
 
     render() {
-        const { onPress, isEnlarge } = this.props
+        const { onPress, isEnlarge, roomNumbers } = this.props
         return (
             <View style={styles.bottomContainer}>
-                <Text style={styles.bottomRightText}>观看人数：1.9万</Text>
+                <Text style={styles.bottomRightText}>{`观看人数：${roomNumbers}`}</Text>
                 <TouchableOpacity style={styles.scaleTouch} onPress={onPress}>
                     <Image resizeMode={'contain'} style={styles.scaleImage} source={isEnlarge ? Images.icon_micrify : Images.icon_enlarge} />
                 </TouchableOpacity>
@@ -208,8 +208,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     backImage: {
-        width: scaleSize(55),
-        height: scaleSize(55),
+        width: ScaleSize(55),
+        height: ScaleSize(55),
         // backgroundColor: 'red',
     },
     rightTouch: {
@@ -220,8 +220,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     rightImage: {
-        width: scaleSize(40),
-        height: scaleSize(35),
+        width: ScaleSize(40),
+        height: ScaleSize(35),
         // backgroundColor: 'red',
     },
 

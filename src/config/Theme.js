@@ -43,7 +43,7 @@ const DefaultTheme = {
     alertTitleFontSize: fontSize(16),
     alertTitleColor: '#000',
     alertDetailFontSize: fontSize(13),
-    alertDetailColor: '#000',
+    alertDetailColor: '#000', 
     alertActionFontSize: fontSize(16),
 
     // action组件

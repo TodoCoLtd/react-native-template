@@ -30,6 +30,7 @@ class Main extends React.PureComponent {
         return (
             <Container fitIPhoneX={false}>
                 <Navigation />
+
             </Container>
         );
     }

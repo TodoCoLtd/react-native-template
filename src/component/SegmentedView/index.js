@@ -66,6 +66,7 @@ class CusSegmentedView extends PureComponent {
 
     changeScrollPage = (index, animated) => {
         const { width } = this.state
+        console.log('changeScrollPage', width)
         if (__IOS__) {
             this._scrollRef.scrollTo({ x: width * index, y: 0, animated: animated });
         } else {
@@ -101,6 +102,10 @@ class CusSegmentedView extends PureComponent {
         const { width } = this.state
         const { x } = e.nativeEvent.contentOffset;
         const cardIndex = Math.round(x / width);
+        console.log('_changePage', x, width)
+        // if (Theme.isLandscape) {
+        //     return;
+        // }
         this._changePage(cardIndex)
 
     }
@@ -115,12 +120,9 @@ class CusSegmentedView extends PureComponent {
         const { activeIndex } = this.state
         const width = e.nativeEvent.layout.width
         const height = e.nativeEvent.layout.height
-        console.log('activeIndex', activeIndex)
-        // setTimeout(() => {
-        //     console.log('activeIndex', activeIndex)
-        // }, 1000);
         this.setState({ width, height }, () => {
-            this.changeScrollPage(activeIndex, false)
+            console.log('_onLayout_activeIndex', activeIndex, width, height, )
+            // this.changeScrollPage(activeIndex, false)
         })
     }
 
@@ -258,6 +260,7 @@ class CusSegmentedBar extends PureComponent {
         } else if (typeof renderCustomBar == 'function') {
             customBar = <this.props.renderCustomBar />
         }
+        console.log('SegmentedBar', this.state.activeIndex)
         return (
             <View style={styles.barStyleContainer} >
                 <ImageBackground style={styles.segmentedBarImage} source={backgroundImage} />

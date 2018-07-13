@@ -1,6 +1,5 @@
 'use strict';
 import Constants from './Constants';
-const WebSocketUrl = 'ws://wmbchat.nididake.com:9501'
 
 class ChatManager {
 
@@ -33,8 +32,8 @@ class ChatManager {
         this.wsInstance = null
     }
 
-
-    registerInfo = (params) => {
+    // 注册接口
+    registerInfo = () => {
         const { user } = this.chatParams
         const info = {
             eventName: Constants.register,
@@ -48,14 +47,15 @@ class ChatManager {
 
     sendMessage = (params) => {
         console.log('sendMessage', params)
-        this.wsInstance.send(JSON.stringify(params))
+        if (this.wsInstance) {
+            this.wsInstance.send(JSON.stringify(params))
+        }
     }
 
     onOpen = (event) => {
         console.log('onOpen', event)
         // 打开后先发送注册的消息
-        const register = { token: this.chatParams.token }
-        this.registerInfo(register)
+        this.registerInfo()
     }
 
     onMessage = (event) => {

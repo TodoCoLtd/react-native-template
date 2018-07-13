@@ -68,7 +68,7 @@ class LivePage extends React.PureComponent {
 
     _onPressSend = (text) => {
         const params = {
-            eventName: ChatConstants.send_barrage,
+            eventName: ChatConstants.SEND_BARRAGE,
             data: {
                 message: text,
                 send_uid: 1,
@@ -80,7 +80,7 @@ class LivePage extends React.PureComponent {
 
     enterRoom = (enter) => {
         const params = {
-            eventName: enter ? ChatConstants.enter_room : ChatConstants.quit_room, //退出:_quit_room
+            eventName: enter ? ChatConstants.ENTER_ROOM : ChatConstants.QUIT_RROM, //退出:_quit_room
             data: {
                 send_uid: this.user.id,
                 room_id: this.room_id
@@ -92,10 +92,10 @@ class LivePage extends React.PureComponent {
     _onChatMessage = (event) => {
         const { data, eventName } = event
         const oldMessages = this.state.messages
-        if (eventName === ChatConstants.send_barrage) {
+        if (eventName === ChatConstants.SEND_BARRAGE) {
             const newMessages = [{ ...data, type: 1 }] // 类型：消息
             this.setState({ messages: newMessages.concat(oldMessages) })
-        } else if (eventName === ChatConstants.send_gift) {
+        } else if (eventName === ChatConstants.SEND_GIFT) {
             const oldGiftsData = this.state.messages
             const newMessages = [{ ...data, type: 2 }] // 类型：礼物
             this.setState({
@@ -110,16 +110,20 @@ class LivePage extends React.PureComponent {
     render() {
         const { messages, giftData } = this.state
         return (
-            <Container>
+            <Container fitIPhoneX={false}>
                 <Liver
                     style={{ flex: 1 }}
                     playerStyle={{ width: SCREEN_WIDTH, height: 220 }}
                     source={{ uri: 'rtmp://live.hkstv.hk.lxdns.com/live/hks' }}
                     messages={messages}
                     giftData={giftData}
+                    roomNumbers={2000}
+                    title={'直播'}
+                    anchor={{}}
                     onPressRecharge={this._onPressRecharge}
                     onPressGift={this._onPressGift}
                     onPressSend={this._onPressSend}
+                    onPressBack={() => RouteHelper.goBack()}
                 />
             </Container>
         );
@@ -127,16 +131,7 @@ class LivePage extends React.PureComponent {
 }
 
 const styles = StyleSheet.create({
-    ceshi: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-    },
-    text: {
-        color: '#fff'
-    }
+
 });
 
 export default LivePage

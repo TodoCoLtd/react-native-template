@@ -6,7 +6,8 @@ import PropTypes from 'prop-types'
 class LiverInfo extends React.PureComponent {
 
     static propTypes = {
-        onClose: PropTypes.func
+        onClose: PropTypes.func,
+        anchor: PropTypes.object
     }
 
     static defaultProps = {
@@ -35,7 +36,7 @@ class LiverInfo extends React.PureComponent {
     }
 
     render() {
-        const { style } = this.props
+        const { style, anchor } = this.props
         return (
             <Animated.View style={[styles.container, style, {
                 transform: [{

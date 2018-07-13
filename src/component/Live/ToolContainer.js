@@ -1,8 +1,6 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, KeyboardAvoidingView } from 'react-native';
-import Images from '../../asset';
-import { scaleSize } from '../../util/Tool';
 
 class ToolContainer extends React.PureComponent {
 
@@ -18,6 +16,7 @@ class ToolContainer extends React.PureComponent {
     _onSubmitEditing = () => {
         const { onPressSend } = this.props
         onPressSend && onPressSend(this.inputText)
+        this.inputRef.clear()
         this.inputText = ''
     }
 
@@ -57,10 +56,11 @@ class ToolContainer extends React.PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-        height: 50,
+        height: Theme.isIPhoneX ? Theme.fitIPhoneXBottom + 50 : 50,
         backgroundColor: '#fff',
         alignItems: 'center',
         flexDirection: 'row',
+        paddingBottom: Theme.isIPhoneX ? Theme.fitIPhoneXBottom : 0,
     },
     inputContainer: {
         flex: 1,
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     textInput: {
         flex: 1,
         marginLeft: 5,
+        fontSize: FontSize(14),
     },
     textInputImage: {
         width: ScaleSize(30),

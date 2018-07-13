@@ -10,7 +10,7 @@ class Message extends React.PureComponent {
         return (
             <View style={styles.messageContainer}>
                 <Image style={styles.messageImage1} />
-                <Image style={styles.messageImage2} source={{ uri: send_head }} />
+                <Image style={styles.messageImage2} source={{ uri: 'send_head' }} />
                 <Text style={styles.messageName}>{`${send_uname}：`}</Text>
                 <Text style={styles.messageContent}>{message}</Text>
             </View>

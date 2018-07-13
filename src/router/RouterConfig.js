@@ -56,7 +56,7 @@ const StackNavigator = createStackNavigator(configRouter({
     Chat: { screen: Chat },
     LivePage: { screen: LivePage },
 }), {
-        initialRouteName: 'Ceshi',
+        initialRouteName: 'Tab',
         cardStyle: {
             shadowOpacity: 0,
             shadowRadius: 0,
