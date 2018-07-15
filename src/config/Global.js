@@ -1,22 +1,22 @@
 // 项目中的图片可以通过Images.xxx 获取
-import { Platform, Text } from 'react-native'
-import { scaleSize, fontSize, isMobile, checkMobile, checkPassword, isEmpty, containsChinese } from '../util/Tool'
+import { Platform } from 'react-native'
+import { scaleSize, fontSize } from '../util/Tool'
 import Theme from './Theme'
 import Images from '../asset/index'
-import { addCustomProps } from '../util/addCustomProps'
 import JShareModule from 'jshare-react-native';
 import XPay from 'react-native-puti-pay';
-import StorageManager from './StorageManager';
 import Services from '../util/Services'
-import MenuManager from './MenuManager'
-import ToastManager from './ToastManager'
-import ActionsManager from './ActionsManager'
-import AlertManager from './AlertManager';
-import InteractionManager from './InteractionManager';
-import RouteHelper from '../router/RouteHelper'
-import * as Constants from './Constants'
+import StorageManager from './manager/StorageManager';
+import MenuManager from './manager/MenuManager'
+import ToastManager from './manager/ToastManager'
+import ActionsManager from './manager/ActionsManager'
+import AlertManager from './manager/AlertManager';
+import InteractionManager from './manager/InteractionManager';
+import RouterHelper from '../router/RouterHelper'
+import Constants from './Constants'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
+
 // 本地化
 moment.locale('zh-cn');
 
@@ -76,7 +76,7 @@ global.Services = Services;
 global.Moment = moment;
 
 // 路由管理
-global.RouteHelper = RouteHelper;
+global.RouterHelper = RouterHelper;
 
 // 菜单管理
 global.MenuManager = MenuManager;

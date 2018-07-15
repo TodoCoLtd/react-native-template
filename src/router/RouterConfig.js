@@ -1,29 +1,18 @@
 'use strict';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
-import { configRouter, tabOptions } from './RouterTool';
 import StackViewStyleInterpolator from 'react-navigation/src/views/StackView/StackViewStyleInterpolator'
-import Home from '../page/Home'
-import Mine from '../page/Mine'
-import Setting from '../page/Setting'
-import LoginAndRegistered from '../page/login/LoginAndRegistered'
-import RecoverPwd from '../page/login/RecoverPwd'
-import VideoPage from '../page/VideoPage';
-import Chat from '../page/Chat';
-import LivePage from '../page/LivePage';
+import { configRouter, tabOptions } from './RouterTool';
+import VideoPage from '../page/example/VideoPage';
+import Chat from '../page/example/Chat';
+import LivePage from '../page/example/LivePage';
+import Example from '../page/example/Example'
 
 const TabNavigator = createBottomTabNavigator({
-    Home: {
-        screen: Home, navigationOptions: tabOptions({
-            title: '首页',
+    Example: {
+        screen: Example, navigationOptions: tabOptions({
+            title: 'Example',
             normalIcon: Images.icon_tabbar_home,
             selectedIcon: Images.icon_tabbar_home_cur
-        })
-    },
-    Mine: {
-        screen: Mine, navigationOptions: tabOptions({
-            title: '我的',
-            normalIcon: Images.icon_tabbar_mine,
-            selectedIcon: Images.icon_tabbar_mine_cur
         })
     },
 }, {
@@ -42,19 +31,15 @@ const TabNavigator = createBottomTabNavigator({
         swipeEnabled: false,
         animationEnabled: false, //关闭安卓底栏动画
         tabBarPosition: "bottom",
-        // tabBarComponent: (props) => <TabBarBottom {...props} />,
-        initialRouteName: 'Home'
+        initialRouteName: 'Example'
     });
 
 const StackNavigator = createStackNavigator(configRouter({
     Tab: { screen: TabNavigator },
-    Mine: { screen: Mine },
-    Setting: { screen: Setting },
-    LoginAndRegistered: { screen: LoginAndRegistered },
-    RecoverPwd: { screen: RecoverPwd },
     VideoPage: { screen: VideoPage },
     Chat: { screen: Chat },
     LivePage: { screen: LivePage },
+    Example: { screen: Example },
 }), {
         initialRouteName: 'Tab',
         cardStyle: {

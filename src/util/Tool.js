@@ -1,20 +1,11 @@
-/*
- 设备的像素密度，例如：
- PixelRatio.get() === 1          mdpi Android 设备 (160 dpi)
- PixelRatio.get() === 1.5        hdpi Android 设备 (240 dpi)
- PixelRatio.get() === 2          iPhone 4, 4S,iPhone 5, 5c, 5s,iPhone 6,xhdpi Android 设备 (320 dpi)
- PixelRatio.get() === 3          iPhone 6 plus , xxhdpi Android 设备 (480 dpi)
- PixelRatio.get() === 3.5        Nexus 6       
- */
-
+'use strict';
 import { Dimensions, PixelRatio } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 
 const deviceWidth = Dimensions.get('window').width;      //设备的宽度
 const deviceHeight = Dimensions.get('window').height;    //设备的高度
-
 const pixelRatio = PixelRatio.get();      //当前设备的像素密度
 const defaultPixel = 2;                           //iphone6的像素密度
-//px转换成dp
 const w2 = 750 / defaultPixel;
 const h2 = 1334 / defaultPixel;
 const scale = Math.min(deviceHeight / h2, deviceWidth / w2);   //获取缩放比例
@@ -50,7 +41,6 @@ const fontSize = (size) => {
         if (deviceHeight >= 667 && deviceHeight <= 735) {
             return size * 1.2;
         }
-
         // catch larger devices
         // ie iphone 6s plus / 7 plus / mi note 等等
         return size * 1.27;
@@ -81,6 +71,43 @@ const scaleSize = (size) => {
     size = Math.round(size * scale + 0.5);
     return size / defaultPixel;
 }
+
+const getDeviceInfo = () => {
+    const info = {
+        apiLevel: DeviceInfo.getAPILevel(), // api版本，安卓可用
+        appName: DeviceInfo.getApplicationName(), // app名字
+        brandName: DeviceInfo.getBrand(), // 设备品牌
+        buildNumber: DeviceInfo.getBuildNumber(), // 设备的build版本
+        bundleId: DeviceInfo.getBundleId(), // 设备的BuildID
+        carrier: DeviceInfo.getCarrier(), // 运营商名称
+        deviceCountry: DeviceInfo.getDeviceCountry(), // 设备的国家
+        deviceLocale: DeviceInfo.getDeviceLocale(), // 设备的本地设置
+        settingFontScale: DeviceInfo.getFontScale(), // 设备设置的字体比率
+        diskStorage: DeviceInfo.getFreeDiskStorage(), // 设备的可存储大小
+        systemVersion: DeviceInfo.getSystemVersion(), // 设备的系统版本
+        timezone: DeviceInfo.getTimezone(), // 设备的时区
+        uniqueId: DeviceInfo.getUniqueID(), // 设备的唯一ID
+        appVersion: DeviceInfo.getVersion(), // app的版本
+        isTablet: DeviceInfo.isTablet(), // 是否为平板电脑
+    }
+    return info
+}
+const addCustomProps = (WrapComponent, customProps) => {
+    const componentRender = WrapComponent.prototype.render;
+    const componentDefaultProps = WrapComponent.prototype.constructor.defaultProps;
+    WrapComponent.prototype.constructor.defaultProps = {
+        ...componentDefaultProps,
+        ...customProps
+    };
+    WrapComponent.prototype.render = function render() {
+        let oldProps = this.props;
+        this.props = {
+            ...this.props,
+            style: [customProps.style, oldProps.style]
+        };
+        return componentRender.apply(this)
+    }
+};
 /**
      * 判断是否是手机号
      * @param mobile
@@ -91,6 +118,7 @@ const isMobile = (mobile) => {
     let re2 = new RegExp(myreg);
     return re2.test(mobile);
 }
+
 /**
    * 表单手机号验证过程
    * @param mobile  手机号
@@ -251,5 +279,7 @@ export {
     sec_to_time,
     bouncer,
     isNumber,
-    sec_to_time_day
+    sec_to_time_day,
+    getDeviceInfo,
+    addCustomProps
 }

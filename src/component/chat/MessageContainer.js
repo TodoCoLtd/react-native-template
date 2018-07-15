@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types'
-import FlatListView from '../FlatListView';
+import FlatListView from '../common/FlatListView';
 import Message from './Message'
 
 class MessageContainer extends React.PureComponent {

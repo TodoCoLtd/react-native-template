@@ -1,6 +1,6 @@
 import { Dimensions, Platform, Text, StyleSheet, StatusBar } from 'react-native'
 import { Theme } from 'teaset'
-import { fontSize, scaleSize } from '../util/Tool';
+import { fontSize, scaleSize, addCustomProps } from '../util/Tool';
 
 //  更改三个文件控件字体大小随系统改变的属性,如果想更改其它第三方的默认属性也可以这样改
 // addCustomProps(Text, { allowFontScaling: false });
@@ -30,7 +30,8 @@ const DefaultTheme = {
     isIPhoneX: Theme.isIPhoneX,
     fitIPhoneXTop: 44,
     fitIPhoneXBottom: 34,
-    pageBackgroundColor: '#e7e7ef',
+    navBarHeight: Theme.themes.default.navBarContentHeight,
+    pageBackgroundColor: '#f7f7f7',
 
     // 弹窗提示组件的样式
     alertWidth: 260,
@@ -43,7 +44,7 @@ const DefaultTheme = {
     alertTitleFontSize: fontSize(16),
     alertTitleColor: '#000',
     alertDetailFontSize: fontSize(13),
-    alertDetailColor: '#000', 
+    alertDetailColor: '#000',
     alertActionFontSize: fontSize(16),
 
     // action组件
@@ -52,7 +53,7 @@ const DefaultTheme = {
     actionTitleColor: '#000',
     cancelTitleFontSize: fontSize(14),
     cancelTitleColor: '#000',
-    titleFontSize: fontSize(14),
+    titleFontSize: fontSize(12),
     titleColor: '#999',
 
     // 分享组件的样式
@@ -98,7 +99,7 @@ const CusTheme = {
             }
             return 0;
         }
-        return Theme.statusBarHeight
+        return 0
     },
     get screenWidth() {
         return Dimensions.get('screen').width

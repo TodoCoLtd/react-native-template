@@ -68,9 +68,9 @@ note:如果想使用`Redux`，请自行引入。
 2.如果SegmentedView之外下面还有其他组件渲染，就会出现样式问题，必须设置固定高度才能解决。
 以上问题已经通过封装SegmentedBar解决。
 
-- RouteHelper（路由管理类，在router文件夹下）
+- RouterHelper（路由管理类，在router文件夹下）
 
->路由管理类，封装高级组件实现的react-navigation管理。简化操作，并且不用集成redux就可以获取整个路由栈的状态和信息。RouteHelper使用的是1.5.11版本，`willBlur`，`willFocus`，`didFocus`，`didBlur`路由的生命周期在各个界面中可以实现componentWillBlur，componentWillFocus，componentDidFocus，componentDidBlur来获得回调
+>路由管理类，封装高级组件实现的react-navigation管理。简化操作，并且不用集成redux就可以获取整个路由栈的状态和信息。RouterHelper使用的是1.5.11版本，`willBlur`，`willFocus`，`didFocus`，`didBlur`路由的生命周期在各个界面中可以实现componentWillBlur，componentWillFocus，componentDidFocus，componentDidBlur来获得回调
 
 - StickyHeader （悬浮的header）
 

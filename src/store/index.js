@@ -1,7 +1,6 @@
-import ceshiStore from './ceshiStore'
-import ceshiStore11 from './ceshi1'
+
+import AppStore from './appStore';
 
 export default {
-    ceshiStore111111: new ceshiStore(),
-    ceshiStore1122222: new ceshiStore11(),
+    appStore: new AppStore()
 };

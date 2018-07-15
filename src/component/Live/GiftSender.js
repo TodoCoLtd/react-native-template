@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import WrapView from '../WrapView';
+import WrapView from '../common/WrapView';
 
 class GiftSender extends React.PureComponent {
 

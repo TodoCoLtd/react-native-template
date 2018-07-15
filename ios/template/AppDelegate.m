@@ -121,7 +121,6 @@
     [JPUSHService handleRemoteNotification:userInfo];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJPFOpenNotification object:userInfo];
   }
-  
   completionHandler();
 }
 @end

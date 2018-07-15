@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types'
 import SegmentedBar from './SegmentedBar'
-import StickyHeader from '../StickyHeader';
+import StickyHeader from '../common/StickyHeader';
 
 class CusSegmentedView extends PureComponent {
 

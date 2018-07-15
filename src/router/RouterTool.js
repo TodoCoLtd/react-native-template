@@ -2,7 +2,7 @@
 'use strict'
 import React from 'react'
 import { Image } from 'react-native';
-import RouteHelper from './RouteHelper'
+import RouterHelper from './RouterHelper'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
 export const tabOptions = (params) => {
@@ -41,7 +41,7 @@ export const createNavigationContainer = (OldComponent) => {
             })
             InteractionManager.runAfterInteractions(() => {
                 console.log('addToRouteStackcomponentDidMount--runAfterInteractions')
-                RouteHelper.addStack(this.props.navigation);
+                RouterHelper.addStack(this.props.navigation);
                 this.subscriptions = [
                     this.props.navigation.addListener('willBlur', (payload) => {
                         console.log('willBlur')
@@ -67,7 +67,7 @@ export const createNavigationContainer = (OldComponent) => {
             // 
             requestAnimationFrame(() => {
                 this.subscriptions.forEach(sub => sub.remove());
-                RouteHelper.remove(this.props.navigation);
+                RouterHelper.remove(this.props.navigation);
             })
             // requestAnimationFrame(() => {
             //     console.log('componentWillUnmount--requestAnimationFrame', this)

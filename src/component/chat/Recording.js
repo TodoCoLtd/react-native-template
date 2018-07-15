@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, PanResponder } from 'react-native';
-import RecordManager from '../../config/RecordManager';
+import RecordManager from '../../config/manager/RecordManager';
 
 class Recording extends React.PureComponent {
 

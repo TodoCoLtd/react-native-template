@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import ToolAnimated from './ToolAnimated';
-import FlatListView from '../FlatListView'
+import FlatListView from '../common/FlatListView'
 
 class CommonLg extends React.PureComponent {
 

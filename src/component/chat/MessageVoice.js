@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types'
-import SoundManager from '../../config/SoundManager';
+import SoundManager from '../../config/manager/SoundManager';
 
 class MessageVoice extends React.PureComponent {
 

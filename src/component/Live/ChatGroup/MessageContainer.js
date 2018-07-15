@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import FlatListView from '../../FlatListView';
+import FlatListView from '../../common/FlatListView';
 import Message from './Message';
 import GiftMessage from './GiftMessage'
 
