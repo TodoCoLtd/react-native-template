@@ -93,7 +93,7 @@ class PlayerTools extends React.PureComponent {
         return (
             <TouchableWithoutFeedback onPress={this._onPressfull}>
                 <Animated.View style={[styles.container, style, { opacity: this.opacity }]}>
-                    <TouchableOpacity style={styles.backTouch}>
+                    <TouchableOpacity style={styles.backTouch} onPress={this._onPressBack}>
                         <Image style={styles.backImage} source={Images.icon_nav_left} />
                     </TouchableOpacity>
                     <CenterView isPaused={this.state.isPaused} onPress={this._onPressLeft} />
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 5,
+        marginBottom: 10,
     },
     centerContainer: {
         flex: 1,
@@ -206,12 +206,13 @@ const styles = StyleSheet.create({
         marginRight: ScaleSize(15),
     },
     backTouch: {
-
+        marginTop: 10,
+        marginLeft: 10,
     },
     backImage: {
-        width: ScaleSize(30),
-        height: ScaleSize(30),
-        backgroundColor: 'blue',
+        width: ScaleSize(50),
+        height: ScaleSize(50),
+        // backgroundColor: 'blue',
     }
 });
 

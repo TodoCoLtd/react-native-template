@@ -80,7 +80,7 @@ class CusNavigationBar extends PureComponent {
 const styles = StyleSheet.create({
     navBarStyle: {
         position: 'relative',
-        backgroundColor: '#53812F'
+        backgroundColor: '#000'
     },
     navBackImage: {
         flex: 1,

@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import PropTypes from 'prop-types'
 import HTML from 'react-native-render-html';
-import ImageView from '../component/ImageView'
+import ImageView from './ImageView'
 
 class HTMLView extends React.PureComponent {
 

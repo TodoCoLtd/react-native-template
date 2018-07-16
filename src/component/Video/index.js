@@ -1,7 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { Theme } from 'teaset';
+import { View, Text, StyleSheet, Dimensions, ViewPropTypes, StatusBar } from 'react-native';
 import PropTypes from 'prop-types'
 import Orientation from 'react-native-orientation';
 import VideoPlayer from './VideoPlayer';
@@ -13,7 +12,7 @@ class index extends React.PureComponent {
 
     static propTypes = {
         source: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.shape({ uri: PropTypes.string })]),
-        videoStyle: PropTypes.object,
+        videoStyle: ViewPropTypes.style,
         style: PropTypes.object,
         defaultPaused: PropTypes.bool,
         totalDuration: PropTypes.number
@@ -26,7 +25,7 @@ class index extends React.PureComponent {
 
     constructor(props) {
         super(props)
-        this.state = { sliderValue: 0, videoStyle: props.videoStyle, }
+        this.state = { sliderValue: 0, landscapeStyle: null, isLandscape: false }
     }
 
     componentDidMount() {
@@ -40,21 +39,17 @@ class index extends React.PureComponent {
     _orientationDidChange = (orientation) => {
         console.log(orientation)
         if (orientation === 'LANDSCAPE') {
-            this.changeLandscapeVideoStyle(true)
+            // this.changeLandscapeVideoStyle(true)
             this._toolsRef.changeEnlarge(true)
         } else {
-            this.setState({ videoStyle: this.props.videoStyle })
+            // this.setState({ videoStyle: this.props.videoStyle })
             this._toolsRef.changeEnlarge(false)
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({ videoStyle: nextProps.videoStyle })
-    }
 
     _onProgress = (currentDuration) => {
         this.setState({ sliderValue: currentDuration })
-        // console.log('currentDuration', currentDuration)
     }
 
     _end = () => {
@@ -87,24 +82,28 @@ class index extends React.PureComponent {
                 this.changeLandscapeVideoStyle()
             } else {
                 Orientation.lockToPortrait()
-                this.setState({ videoStyle: this.props.videoStyle })
+                this.setState({ landscapeStyle: null, isLandscape: false })
             }
         });
     }
 
-    changeLandscapeVideoStyle = (isLand = false) => {
-        const { videoStyle } = this.props
+    changeLandscapeVideoStyle = () => {
+        let newWidth = 0, newHeight = 0
+        if (__ANDROID__) {
+            newWidth = SCREEN_HEIGHT
+            newHeight = SCREEN_WIDTH
+        } else {
+            newWidth = SCREEN_HEIGHT
+            newHeight = SCREEN_WIDTH
+        }
+        // 安卓减去状态栏的高度
+        this.setState({
+            landscapeStyle: { width: newWidth, height: newHeight },
+            isLandscape: true
+        })
         setTimeout(() => {
-            const { width, height } = Dimensions.get('window');
-            // 安卓减去状态栏的高度
-            this.setState({
-                videoStyle: [
-                    videoStyle,
-                    { width: width, height: __IOS__ ? height + 20 : height - Theme.statusBarHeight }
-                ]
-            })
-            console.log(width, height)
-        }, 200);
+            console.log('w-h', newWidth, newHeight)
+        }, 500);
     }
 
     _captureRef = (v) => {
@@ -117,35 +116,41 @@ class index extends React.PureComponent {
 
     render() {
         const { source, style, videoStyle, onPressBack, defaultPaused, totalDuration } = this.props
+        const { landscapeStyle, isLandscape } = this.state
+        const isLandscapeOffset = __IOS__ ? 20 : 0
         return (
             <View style={style}>
-                <VideoPlayer
-                    ref={this._captureRef}
-                    source={source}
-                    style={this.state.videoStyle}
-                    onProgress={this._onProgress}
-                    onEnd={this._end}
-                    defaultPaused={defaultPaused}
-                />
-                <PlayerTools
-                    style={styles.playerTools}
-                    ref={this._captureToolsRef}
-                    currentDuration={Math.ceil(this.state.sliderValue)}
-                    totalDuration={totalDuration}
-                    defaultPaused={defaultPaused}
-                    defaultEnlarge={false}
-                    onPressLeft={this._onPressLeft}
-                    onPressRight={this._onPressRight}
-                    debugTouchArea={true}
-                    sliderStyle={styles.sliderContainer}
-                    step={0.1}
-                    value={this.state.sliderValue}
-                    minimumValue={0}
-                    maximumValue={totalDuration}
-                    onSlidingStart={this._onSlidingStart}
-                    onSlidingComplete={this._onSlidingComplete}
-                    onPressBack={onPressBack}
-                />
+                <StatusBar hidden={isLandscape} />
+                <View style={[styles.statusBar, { height: isLandscape ? isLandscapeOffset : Theme.statusBarHeight }]} />
+                <View style={[styles.playerContainer, landscapeStyle]}>
+                    <VideoPlayer
+                        ref={this._captureRef}
+                        source={source}
+                        style={[videoStyle, landscapeStyle]}
+                        onProgress={this._onProgress}
+                        onEnd={this._end}
+                        defaultPaused={defaultPaused}
+                    />
+                    <PlayerTools
+                        style={styles.playerTools}
+                        ref={this._captureToolsRef}
+                        currentDuration={Math.ceil(this.state.sliderValue)}
+                        totalDuration={totalDuration}
+                        defaultPaused={defaultPaused}
+                        defaultEnlarge={false}
+                        onPressLeft={this._onPressLeft}
+                        onPressRight={this._onPressRight}
+                        debugTouchArea={true}
+                        sliderStyle={styles.sliderContainer}
+                        step={0.1}
+                        value={this.state.sliderValue}
+                        minimumValue={0}
+                        maximumValue={totalDuration}
+                        onSlidingStart={this._onSlidingStart}
+                        onSlidingComplete={this._onSlidingComplete}
+                        onPressBack={onPressBack}
+                    />
+                </View>
             </View>
         );
     }
@@ -162,6 +167,12 @@ const styles = StyleSheet.create({
         flex: 1,
         // backgroundColor: 'red',
         height: 15
+    },
+    statusBar: {
+        backgroundColor: '#000',
+    },
+    playerContainer: {
+        backgroundColor: '#000',
     },
     playerTools: {
         position: 'absolute',
