@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Keyboard, NetInfo } from 'react-native';
 import PropTypes from 'prop-types'
-import NetworkError from '../common/NetworkError'
+import NetworkError from './NetworkError'
 import { observer, inject } from 'mobx-react';
 
 /**

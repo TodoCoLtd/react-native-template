@@ -1,7 +1,6 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Countdown from './Countdown';
 import PropTypes from 'prop-types'
 
 class VerificationCode extends React.PureComponent {

@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types'
 import BackgroundTimer from 'react-native-background-timer';
-import { sec_to_time_day } from '../util/Tool';
+import { sec_to_time_day } from '../../util/Tool';
 
 // 倒计时组件
 class Countdown extends React.PureComponent {

@@ -6,7 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text, TouchableOpacity, ViewPropTypes, TextInput } from 'react-native';
 import { Theme } from 'teaset';
-import { isNumber } from '../util/Tool';
+import { isNumber } from '../../util/Tool';
 
 class Stepper extends React.PureComponent {
 
