@@ -20,7 +20,8 @@ class Container extends React.Component {
         // 点击空白视图层落下键盘,如果你的组件是scrollview或者列表就务必要设置false,
         // 因为父组件的点击手势会影响子组件的滚动,且列表组件自带键盘落下的特性。
         keyboardShouldPersistTaps: PropTypes.bool,
-        onPressReload: PropTypes.func,// 网络出现错误后重新刷新
+        onNetworkReload: PropTypes.func,// 网络出现错误后重新刷新
+        error: PropTypes.bool
     };
 
     static defaultProps = {
@@ -61,14 +62,14 @@ class Container extends React.Component {
     };
 
     render() {
-        const { children, style, keyboardShouldPersistTaps, appStore, onPressReload } = this.props
+        const { children, style, keyboardShouldPersistTaps, appStore, onNetworkReload } = this.props
         const { iphoneXStyle } = this.buildProps()
         console.log('appStore')
         return (
             <TouchableWithoutFeedback disabled={!keyboardShouldPersistTaps} onPress={this._onPresssContainer}>
                 <View style={[styles.container, iphoneXStyle, style]}>
                     {children}
-                    {appStore.networkState === 'none' ? <NetworkError onPressReload={onPressReload} /> : null}
+                    {appStore.networkState === 'none' ? <NetworkError onNetworkReload={onNetworkReload} /> : null}
                 </View>
             </TouchableWithoutFeedback>
         );

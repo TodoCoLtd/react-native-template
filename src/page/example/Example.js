@@ -18,7 +18,7 @@ class Example extends React.PureComponent {
 
     }
 
-    _onPressReload = () => {
+    _onNetworkReload = () => {
         const params = {
             title: '温馨提示',
             detail: '重新刷新网络',
@@ -81,7 +81,7 @@ class Example extends React.PureComponent {
 
     render() {
         return (
-            <Container onPressReload={this._onPressReload}>
+            <Container onNetworkReload={this._onNetworkReload}>
                 <NavigationBar
                     title={'Example'}
                     rightView={null}

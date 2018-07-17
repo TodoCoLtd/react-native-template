@@ -1,16 +1,25 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import PropTypes from 'prop-types'
 
 class NetworkError extends React.PureComponent {
 
+    static propTypes = {
+        onNetworkReload: PropTypes.func
+    }
+
+    static defaultProps = {
+
+    }
+
     render() {
-        const { onPressReload } = this.props
+        const { onNetworkReload } = this.props
         return (
             <View style={styles.container}>
                 <Image style={styles.errImage} source={Images.icon_network_err} />
                 <Text style={styles.description}>天哪，网络好像出了点小问题?</Text>
-                <TouchableOpacity style={styles.reloadTouch} onPress={onPressReload}>
+                <TouchableOpacity style={styles.reloadTouch} onPress={onNetworkReload}>
                     <Text style={styles.reloadText}>重新加载</Text>
                 </TouchableOpacity>
             </View>
