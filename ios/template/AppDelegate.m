@@ -14,6 +14,25 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
+#ifdef DEBUG
+#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define DeBugLog(fmt, ...) NSLog((@"%s [Line %d] " fmt),  __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define NSLog(fmt, ...) NSLog((@"%@" fmt),@"[JIASONG] ",##__VA_ARGS__);
+#define MyNSLog(fmt, ...) fprintf(stderr,"[%s]:[line %d行] %s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:fmt, ##__VA_ARGS__] UTF8String]);
+
+#else
+#define DLog(...)
+#define DeBugLog(...)
+#define NSLog(...)
+#define MyNSLog(FORMAT, ...)
+#define RCTLog(FORMAT, ...)
+#define RCTLog(...)
+#define RCTLogTrace(...)
+#define RCTLogInfo(...)
+#define RCTLogAdvice(string, ...)
+#define RCTLogWarn(...)
+#define RCTLogError(...)
+#endif
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -22,6 +41,10 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>  // import
 #import <React/RCTLinkingManager.h>
+
+@interface AppDelegate () <JPUSHRegisterDelegate>
+
+@end
 
 @implementation AppDelegate
 
@@ -36,6 +59,10 @@
   
   NSMutableDictionary *param = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
   if (param[@"appKey"]) {
+    JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+    entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+    [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+    
     [JPUSHService setupWithOption:launchOptions appKey:param[@"appKey"]
                           channel:nil apsForProduction:nil];
   }
@@ -58,7 +85,7 @@
   
  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];  // allow
   
-//  [SplashScreen show];  // here
+  [SplashScreen show];  // here
   
   return YES;
 }
@@ -93,14 +120,14 @@
   [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
 }
 
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-  [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object: notification.userInfo];
-}
-
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)   (UIBackgroundFetchResult))completionHandler
 {
   [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+  [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object: notification.userInfo];
 }
 
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler
@@ -110,8 +137,8 @@
     [JPUSHService handleRemoteNotification:userInfo];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
   }
-  
-  completionHandler(UNNotificationPresentationOptionAlert);
+    // 注释掉之后应用在前台不弹窗
+//  completionHandler(UNNotificationPresentationOptionAlert);
 }
 
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler

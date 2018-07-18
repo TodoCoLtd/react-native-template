@@ -60,8 +60,9 @@ class Main extends React.Component {
     };
 
     _handlePushListener = () => {
-        JPushModule.initPush()
         if (__ANDROID__) {
+            // 仅仅在安卓调用
+            JPushModule.initPush()
             JPushModule.notifyJSDidLoad(resultCode => {
                 if (resultCode === 0) {
                 }
@@ -73,13 +74,13 @@ class Main extends React.Component {
         })
 
         JPushModule.addReceiveNotificationListener(map => {
-            // 接收推送事件
-            console.log('alertContent: ' + map.alertContent)
-            console.log('extras: ' + map.extras)
+            // 接收推送事件     并且点击推送（ios9及以下）需要判断系统版本
+            console.log('alertContent: ', map.alertContent)
+            console.log('extras: ', map.extras)
         })
 
         JPushModule.addReceiveOpenNotificationListener(map => {
-            // 点击推送事件
+            // 点击推送事件，iOS10及以上
             console.log('Opening notification!')
             console.log('map.extra: ' + map.extras)
         })
