@@ -26,7 +26,6 @@
 #define NSLog(...)
 #define MyNSLog(FORMAT, ...)
 #define RCTLog(FORMAT, ...)
-#define RCTLog(...)
 #define RCTLogTrace(...)
 #define RCTLogInfo(...)
 #define RCTLogAdvice(string, ...)
@@ -50,27 +49,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  // 极光推送
-  //Required
-  NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RCTJShareConfig" ofType:@"plist"];
-  if (plistPath == nil) {
-    NSLog(@"error: RCTJShareConfig.plist not found");
-  }
-  
-  NSMutableDictionary *param = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-  if (param[@"appKey"]) {
-    JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
-    entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
-    [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-    
-    [JPUSHService setupWithOption:launchOptions appKey:param[@"appKey"]
-                          channel:nil apsForProduction:nil];
-  }
+  [self setJPUSHService:launchOptions];
 
   NSURL *jsCodeLocation;
-
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"template"
                                                initialProperties:nil
@@ -89,6 +71,27 @@
   
   return YES;
 }
+
+-(void)setJPUSHService:(NSDictionary *)launchOptions {
+  // 极光推送
+  NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RCTJShareConfig" ofType:@"plist"];
+  if (plistPath == nil) {
+    NSLog(@"error: RCTJShareConfig.plist not found");
+  }
+  NSMutableDictionary *param = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+  if (param[@"appKey"]) {
+    if (@available(iOS 10.0, *)) {
+      JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+      entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+      [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+    } else if (@available(iOS 8.0, *)) { //可以添加自定义categories
+      [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil];
+    }
+    [JPUSHService setupWithOption:launchOptions appKey:param[@"appKey"]
+                          channel:nil apsForProduction:nil];
+  }
+}
+
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
   return [Orientation getOrientation];
 }
