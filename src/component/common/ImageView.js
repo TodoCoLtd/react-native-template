@@ -10,23 +10,21 @@ class ImageView extends React.PureComponent {
     static propTypes = {
         ...Image.propTypes,
         maxImageWidth: PropTypes.number,
-        defaultSize: PropTypes.shape({ width: PropTypes.number, height: PropTypes.number, }),
-        useMaxImage: PropTypes.bool,
-        useFastImage: PropTypes.bool
+        useMaxImage: PropTypes.bool, // 不用的话是普通Image
+        useFastImage: PropTypes.bool // 使用原生敲击的缓存image 
     };
 
     static defaultProps = {
         ...Image.defaultProps,
         maxImageWidth: SCREEN_WIDTH,
-        defaultSize: { width: 0, height: 0 },
         useFastImage: false,
         useMaxImage: false
     };
 
     constructor(props) {
         super(props);
-        this.state = { imageSize: props.defaultSize }
-        this.unmount = false
+        this.state = { imageSize: null }
+        this.isUnmount = false
     };
 
     componentDidMount() {
@@ -37,31 +35,42 @@ class ImageView extends React.PureComponent {
     }
 
     componentWillUnmount() {
-        this.unmount = true
+        this.isUnmount = true
     }
 
     _loadImage = () => {
-        const { maxImageWidth, source } = this.props
-        if (source.uri === undefined) {
-            return;
+        const { source } = this.props
+        if (!source) {
+            return
         }
-        let uri = source.uri
-        Image.getSize(uri, (width, height) => {
-            if (width >= maxImageWidth) {
-                height = (maxImageWidth / width) * height
-                width = maxImageWidth
+        if (source.uri === undefined) {
+            const { width, height } = Image.resolveAssetSource(source)
+            if (!this.isUnmount) {
+                this._setImageSize(width, height)
             }
-            if (!this.unmount) {
-                this.setState({ imageSize: { width, height } })
-            }
-        }, (error) => { })
+        } else {
+            Image.getSize(source.uri, (width, height) => {
+                if (!this.isUnmount) {
+                    this._setImageSize(width, height)
+                }
+            }, (error) => { })
+        }
+    }
+
+    _setImageSize = (width, height) => {
+        const { maxImageWidth } = this.props
+        if (width >= maxImageWidth) {
+            height = (maxImageWidth / width) * height
+            width = maxImageWidth
+        }
+        this.setState({ imageSize: { width, height } })
     }
 
     _renderImage = () => {
         const { style, ...others } = this.props
         const { imageSize } = this.state
         return (
-            <Image style={[imageSize, style]} {...others} />
+            <Image style={[style, imageSize]} {...others} />
         )
     };
 

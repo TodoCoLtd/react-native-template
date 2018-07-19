@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Countdown from './Countdown';
 import PropTypes from 'prop-types'
 
 class VerificationCode extends React.PureComponent {
@@ -8,6 +9,7 @@ class VerificationCode extends React.PureComponent {
     static propTypes = {
         interval: PropTypes.number,
         open: PropTypes.bool,
+        onStopInterval: PropTypes.func,
     }
 
     static defaultProps = {
@@ -66,7 +68,7 @@ class VerificationCode extends React.PureComponent {
                         <Text style={styles.countdownText}>{`${intervalNumber}s`}</Text>
                     </View>) : (
                         <TouchableOpacity style={styles.codeContainer} onPress={this._onPress}>
-                            <Text style={styles.codeText}>| 获取验证码</Text>
+                            <Text style={styles.codeText}>获取验证码</Text>
                         </TouchableOpacity>
                     )}
             </View>
@@ -76,26 +78,31 @@ class VerificationCode extends React.PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-        height: ScaleSize(55),
-        width: ScaleSize(200),
-        alignItems: 'center',
-        justifyContent: 'center',
+        // height: ScaleSize(55),
+        // width: ScaleSize(200),
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        // backgroundColor: 'red',
     },
     codeText: {
-        color: '#1BB77A',
-        fontSize: FontSize(14),
+        color: '#43a4fe',
+        fontSize: FontSize(13),
     },
     codeContainer: {
-
-
+        borderRadius: 14,
+        backgroundColor: "#e6f0ff",
+        paddingHorizontal: 13,
+        paddingVertical: 7,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     countdownText: {
-        color: '#fff',
+        color: '#418bf2',
         fontSize: FontSize(14),
     },
     countdownTextContainer: {
         position: 'absolute',
-        backgroundColor: '#1BB77A',
+        backgroundColor: '#43a4fe',
         width: ScaleSize(130),
         alignItems: 'center',
         paddingVertical: 5,

@@ -9,6 +9,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import NavigationBar from '../../component/common/NavigationBar';
 import Container from '../../component/common/Container';
 import SpinnerLoading from '../../component/common/SpinnerLoading';
+import LargePicture from '../../component/common/LargePicture';
 import { ListRow } from 'teaset';
 
 class Example extends React.PureComponent {
@@ -79,6 +80,10 @@ class Example extends React.PureComponent {
         ActionsManager.showShareModule(params)
     }
 
+    _onPressLargePicture = () => {
+
+    }
+
     render() {
         return (
             <Container onNetworkReload={this._onNetworkReload}>
@@ -96,6 +101,18 @@ class Example extends React.PureComponent {
                     <ListRow title={'Actions-showArea'} onPress={this._onPressActionsShowArea} />
                     <ListRow title={'Actions-showShareModule'} onPress={this._onPressActionsShowShareModule} />
                     <ListRow title={'Actions-showShareModule'} onPress={this._onPressActionsShowShareModule} />
+                    <View style={styles.section} />
+                    <ListRow
+                        title={'LargePicture (查看大图)'}
+                        detail={
+                            <LargePicture
+                                style={{ width: 50, height: 50, backgroundColor: 'red', }}
+                                source={Images.img_bg_navbar}
+                            />
+                        }
+                        onPress={this._onPressLargePicture}
+                    />
+
                 </ScrollView>
             </Container>
         );
