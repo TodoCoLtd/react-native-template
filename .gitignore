@@ -32,9 +32,8 @@ local.properties
 *.iml
 
 # node.js
-#
-node_modules/*
-!node_modules/teaset/*
+/node_modules/*
+!/node_modules/teaset
 npm-debug.log
 yarn-error.log
 
@@ -53,5 +52,4 @@ buck-out/
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
-node_modules/
 Pods/
