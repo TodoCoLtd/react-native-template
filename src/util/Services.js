@@ -1,5 +1,6 @@
 'use strict';
 import queryString from 'query-string';
+import FetchBlob from 'react-native-fetch-blob';
 
 // 默认选项配置
 const _settings = {
@@ -126,23 +127,41 @@ const configSettings = (settings) => {
 	 */
 const request = (settings) => {
     const { newSettings, options } = configSettings(settings)
-    console.log('请求参数---', newSettings)
+    console.log('请求参数--->', settings)
     return fetch(newSettings.url, options).then((res) => {
         const status = res.status;
         if (res.ok && status >= 200 && status < 300 || status === 304) {
             const dataType = newSettings.dataType || res.headers.get('Content-Type');
             if (dataType.match(/json/)) {
                 const resJson = res.json()
-                return Promise.all([resJson, res]);
+                console.log('请求成功--->', resJson)
+                return Promise.resolve(resJson)
             } else {
-                return Promise.all([res.text(), res]);
+                return Promise.resolve(res.text());
             }
         } else {
             const error = status + ' ' + (res.statusText || '');
-            console.log('请求失败---', error)
+            console.log('请求失败--->', error)
             return Promise.reject(error || 'error');
         }
     })
+}
+
+const requestBlob = (settings) => {
+    const { newSettings, options } = configSettings(settings)
+    console.log('上传参数--->', newSettings.url)
+    return FetchBlob.fetch(options.method, newSettings.url, {}, FetchBlob.wrap(newSettings.path))
+        .uploadProgress((written, total) => {
+            console.log('uploaded', written / total)
+            newSettings.uploadProgress && newSettings.uploadProgress(written / total)
+        }).then((res) => {
+            const resJson = res.json()
+            console.log('上传成功--->', resJson)
+            return Promise.resolve(resJson)
+        }).catch((error) => {
+            console.log('上传失败--->', error)
+            return Promise.reject(error)
+        })
 }
 
 /**
@@ -175,4 +194,23 @@ const post = (url, data) => {
     return request(setting);
 }
 
-export default { configSettings, get, post } 
+/**
+ * [upload 快捷方法]
+ * @param  {[type]} url  [url]
+ * @param  {[type]} path [本地路径]
+ * @param  {[type]} query [
+ * ]
+ * @return promise
+ */
+const upload = (url, path, query) => {
+    const setting = {
+        url: url,
+        method: 'POST',
+        path: path,
+        query: { token: global.token, ...query },
+        uploadProgress: null,
+    }
+    return requestBlob(setting);
+}
+
+export default { configSettings, get, post, upload } 

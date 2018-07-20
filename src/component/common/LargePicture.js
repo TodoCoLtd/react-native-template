@@ -47,7 +47,7 @@ class LargePicture extends React.PureComponent {
         const { style, imageStyle, ...others } = this.props
         return (
             <TouchableOpacity style={style} onPress={this._onPressShow}>
-                <Image style={imageStyle} {...others} />
+                <ImageView style={imageStyle} {...others} />
             </TouchableOpacity>
         );
     }

@@ -84,6 +84,10 @@ class Example extends React.PureComponent {
 
     }
 
+    _onPressList = () => {
+        RouterHelper.navigate('ListExample')
+    }
+
     render() {
         return (
             <Container onNetworkReload={this._onNetworkReload}>
@@ -112,7 +116,7 @@ class Example extends React.PureComponent {
                         }
                         onPress={this._onPressLargePicture}
                     />
-
+                    <ListRow title={'list-列表'} onPress={this._onPressList} />
                 </ScrollView>
             </Container>
         );

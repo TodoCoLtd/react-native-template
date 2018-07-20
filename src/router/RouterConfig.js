@@ -2,9 +2,12 @@
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 import StackViewStyleInterpolator from 'react-navigation/src/views/StackView/StackViewStyleInterpolator'
 import { configRouter, tabOptions } from './RouterTool';
+
+
 import VideoPage from '../page/example/VideoPage';
 import Chat from '../page/example/Chat';
 import LivePage from '../page/example/LivePage';
+import ListExample from '../page/example/ListExample'
 import Example from '../page/example/Example'
 
 const TabNavigator = createBottomTabNavigator({
@@ -39,6 +42,7 @@ const StackNavigator = createStackNavigator(configRouter({
     VideoPage: { screen: VideoPage },
     Chat: { screen: Chat },
     LivePage: { screen: LivePage },
+    ListExample: { screen: ListExample },
     Example: { screen: Example },
 }), {
         initialRouteName: 'Tab',

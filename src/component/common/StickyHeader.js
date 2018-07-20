@@ -1,10 +1,8 @@
 'use strict';
-//import liraries
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Animated, StyleSheet, } from 'react-native'
+import { Animated, StyleSheet } from 'react-native'
 
-// create a component
 export default class StickyHeader extends PureComponent {
     static propTypes = {
         stickyHeaderY: PropTypes.number,
