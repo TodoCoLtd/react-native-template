@@ -4,14 +4,13 @@ import { StyleSheet, Image, } from 'react-native';
 import PropTypes from 'prop-types'
 // import FastImage from 'react-native-fast-image' // 在安卓上有问题，等作者发布
 
-// 加载网络图片
 class ImageView extends React.PureComponent {
 
     static propTypes = {
         ...Image.propTypes,
         maxImageWidth: PropTypes.number,
         useMaxImage: PropTypes.bool, // 不用的话是普通Image
-        useFastImage: PropTypes.bool // 使用原生敲击的缓存image 
+        useFastImage: PropTypes.bool // 使用原生桥接的缓存image 
     };
 
     static defaultProps = {

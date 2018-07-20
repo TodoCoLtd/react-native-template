@@ -17,7 +17,6 @@ class AppStore extends BaseStore {
     @action
     changeNetworkState = (type) => {
         this.networkState = type
-        // this.networkState = 'none'
     }
 
     @action

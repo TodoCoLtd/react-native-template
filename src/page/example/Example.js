@@ -110,7 +110,7 @@ class Example extends React.PureComponent {
                         title={'LargePicture (查看大图)'}
                         detail={
                             <LargePicture
-                                style={{ width: 50, height: 50, backgroundColor: 'red', }}
+                                imageStyle={{ width: 50, height: 50, backgroundColor: 'red', }}
                                 source={Images.img_bg_navbar}
                             />
                         }
