@@ -54,7 +54,8 @@ class FlatListView extends React.PureComponent {
         };
         if (__IOS__) {
             // 解决列表初始化时显示刷新按钮导致的bug
-            this._currentEndReachedStatus = props.data.length === 0 && props.initialRefresh ? EndReachedStatus.FIRST_LOADED : EndReachedStatus.WAITING_LOADING;
+            //  this._currentEndReachedStatus = props.data.length === 0 && props.initialRefresh ? EndReachedStatus.FIRST_LOADED : EndReachedStatus.WAITING_LOADING;
+            this._currentEndReachedStatus = EndReachedStatus.WAITING_LOADING
         } else {
             this._currentEndReachedStatus = EndReachedStatus.WAITING_LOADING
         }
@@ -344,6 +345,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        height: 30,
         // backgroundColor: 'red',
     },
     indicatorContainer: {
@@ -351,6 +353,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        height: 30,
     },
     footerText: {
         marginLeft: 10,
