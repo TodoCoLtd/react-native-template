@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types'
-import FlatListView from '../common/FlatListView';
+import ListView from '../list/ListView';
 import Message from './Message'
 
 class MessageContainer extends React.PureComponent {
@@ -81,7 +81,7 @@ class MessageContainer extends React.PureComponent {
         const { messages, onScrollBeginDrag } = this.props
         console.log('MessageContainer')
         return (
-            <FlatListView
+            <ListView
                 ref={this._captureRef}
                 style={styles.flatListView}
                 contentContainerStyle={styles.contentContainerStyle}

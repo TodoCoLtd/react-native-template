@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import FlatListView from '../../common/FlatListView';
+import ListView from '../../list/ListView';
 import Message from './Message';
 import GiftMessage from './GiftMessage'
 
@@ -52,7 +52,7 @@ class MessageContainer extends React.PureComponent {
     render() {
         const { messages } = this.props
         return (
-            <FlatListView
+            <ListView
                 ref={this._captureRef}
                 style={styles.flatListView}
                 contentContainerStyle={styles.contentContainerStyle}

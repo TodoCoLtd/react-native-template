@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import ToolAnimated from './ToolAnimated';
-import FlatListView from '../common/FlatListView'
+import ListView from '../list/ListView'
 
 class CommonLg extends React.PureComponent {
 
@@ -67,7 +67,7 @@ class CommonLg extends React.PureComponent {
                 initTranslateY={contentHeight}
                 barHeight={barHeight}
                 style={[styles.container, { height: contentHeight, top: barHeight }]} >
-                <FlatListView
+                <ListView
                     ref={this._captureRef}
                     initialRefresh={false}
                     enableLoadMore={false}

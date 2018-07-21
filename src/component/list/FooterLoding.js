@@ -31,7 +31,9 @@ class FooterLoding extends React.PureComponent {
 
     renderAllLoad = () => {
         return (
-            <Text style={styles.footerText}>没有更多数据</Text>
+            <View style={styles.indicatorContainer}>
+                <Text style={styles.footerText}>没有更多数据</Text>
+            </View>
         )
     }
 

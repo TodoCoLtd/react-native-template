@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import { View, Text, StyleSheet, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import PropTypes from 'prop-types'
 
 class HeaderLoading extends React.PureComponent {

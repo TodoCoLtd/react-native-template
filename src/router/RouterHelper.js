@@ -88,12 +88,12 @@ class RouterHelper {
         this.navigation.replace(routeName, params)
     }
 
-    static reset(routeName) {
+    static reset(routeName, params) {
 
         let resetAction = StackActions.reset({
             index: 0,
             actions: [
-                NavigationActions.navigate({ routeName: routeName })
+                NavigationActions.navigate({ routeName, params })
             ]
         });
         this.navigation.dispatch(resetAction);
